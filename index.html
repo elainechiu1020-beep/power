@@ -310,10 +310,10 @@
                 </div>
                 <div class="max-w-2xl mx-auto">
                     <div class="text-center mb-4">
-                        <span class="text-3xl font-black text-red-600" id="oil-price-display">$80</span>
+                        <span class="text-3xl font-black text-red-600" id="oil-price-display">$33</span>
                     </div>
                     <input 
-                        type="range" min="33" max="150" value="80" 
+                        type="range" min="33" max="150" value="33" 
                         oninput="updateOilPrice(this.value)"
                         class="w-full h-3 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-red-600"
                         id="oil-slider"
@@ -325,8 +325,8 @@
                     </div>
                     
                     <div class="mt-14 grid grid-cols-3 gap-6 text-center">
-                        <div><div class="text-2xl mb-1">🥖</div><div class="text-xs font-bold">麵包價格</div><div class="text-red-600 font-black" id="price-bread">$35</div></div>
-                        <div><div class="text-2xl mb-1">🚴</div><div class="text-xs font-bold">外送運費</div><div class="text-red-600 font-black" id="price-delivery">$40</div></div>
+                        <div><div class="text-2xl mb-1">🥖</div><div class="text-xs font-bold">麵包價格</div><div class="text-red-600 font-black" id="price-bread">$30</div></div>
+                        <div><div class="text-2xl mb-1">🚴</div><div class="text-xs font-bold">外送運費</div><div class="text-red-600 font-black" id="price-delivery">$49</div></div>
                         <div><div class="text-2xl mb-1">🔌</div><div class="text-xs font-bold">電費壓力</div><div class="text-red-600 font-black" id="price-elec">$600</div></div>
                     </div>
                 </div>
@@ -1262,12 +1262,12 @@
 
         // Oil Price Slider Logic
         function updateOilPrice(value) {
-            const basePrice = 80;
+            const basePrice = 33;
             const ratio = value / basePrice;
             
             document.getElementById('oil-price-display').innerText = '$' + value;
-            document.getElementById('price-bread').innerText = '$' + Math.round(35 * ratio);
-            document.getElementById('price-delivery').innerText = '$' + Math.round(40 * ratio);
+            document.getElementById('price-bread').innerText = '$' + Math.round(30 * ratio);
+            document.getElementById('price-delivery').innerText = '$' + Math.round(49 * ratio);
             document.getElementById('price-elec').innerText = '$' + Math.round(600 * ratio);
         }
 
