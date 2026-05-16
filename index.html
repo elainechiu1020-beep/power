@@ -1,0 +1,1335 @@
+
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>能源守護者：石油全線戰略特展</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap');
+        html {
+            font-size: 18px;
+            transition: font-size 0.3s ease;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.7s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .slide-in-from-bottom {
+            animation: slideInFromBottom 0.7s ease-out;
+        }
+
+        @keyframes slideInFromBottom {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Styles for Lucide icons replacements (Font Awesome) */
+        .icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-gray-900 pb-20 text-base" id="appBody">
+
+    <nav class="bg-slate-900 text-white sticky top-0 z-50 shadow-xl">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <i class="fa-solid fa-shield-halved text-yellow-400 text-2xl"></i>
+                <h1 class="text-xl font-black tracking-wider">能源守護者：石油全線戰略特展</h1>
+            </div>
+            <div class="hidden md:flex gap-6 text-sm font-medium" id="nav-links">
+                <button onclick="switchTab('home')" class="nav-btn hover:text-yellow-400 transition text-yellow-400 border-b-2 border-yellow-400" data-target="home">首頁</button>
+                <button onclick="switchTab('global')" class="nav-btn hover:text-yellow-400 transition" data-target="global">全球能源棋局</button>
+                <button onclick="switchTab('sea')" class="nav-btn hover:text-yellow-400 transition" data-target="sea">跨海生命線</button>
+                <button onclick="switchTab('tech')" class="nav-btn hover:text-yellow-400 transition" data-target="tech">科技盾牌</button>
+                <button onclick="switchTab('future')" class="nav-btn hover:text-yellow-400 transition" data-target="future">永續和平未來</button>
+                <button onclick="switchTab('game')" class="nav-btn hover:text-yellow-400 transition" data-target="game">遊戲</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="md:hidden fixed top-20 left-1/2 -translate-x-1/2 flex bg-slate-900/95 backdrop-blur-md text-white px-4 py-3 rounded-full shadow-2xl gap-3 text-[10px] z-40 border border-slate-700" id="mobile-nav-links">
+        <button onclick="switchTab('home')" class="mobile-nav-btn text-yellow-400 font-bold" data-target="home">首頁</button>
+        <button onclick="switchTab('global')" class="mobile-nav-btn" data-target="global">棋局</button>
+        <button onclick="switchTab('sea')" class="mobile-nav-btn" data-target="sea">生命線</button>
+        <button onclick="switchTab('tech')" class="mobile-nav-btn" data-target="tech">盾牌</button>
+        <button onclick="switchTab('future')" class="mobile-nav-btn" data-target="future">未來</button>
+        <button onclick="switchTab('game')" class="mobile-nav-btn" data-target="game">遊戲</button>
+    </div>
+
+    <div class="fixed top-28 left-2 md:top-32 md:left-6 z-50 flex flex-col items-start gap-2">
+        <button onclick="toggleFontPanel()" id="font-toggle-btn" class="w-11 h-11 rounded-full bg-white/95 backdrop-blur shadow-xl border border-slate-200 flex items-center justify-center text-blue-700 hover:bg-blue-50 transition-colors" title="字體大小" aria-expanded="false" aria-controls="font-size-panel">
+            <i class="fa-solid fa-text-height"></i>
+        </button>
+        <div id="font-size-panel" class="hidden bg-white/95 backdrop-blur shadow-xl border border-slate-200 rounded-2xl p-2 flex-col items-center gap-2 transition-all">
+        <div class="text-[10px] font-bold text-slate-500 border-b border-slate-200 pb-1 w-full text-center">字體</div>
+        <button onclick="changeFontSize('large', this)" class="font-btn w-8 h-8 rounded-full flex items-center justify-center transition-colors hover:bg-slate-100 text-slate-700 text-lg font-black" title="大字體">大</button>
+        <button onclick="changeFontSize('medium', this)" class="font-btn w-8 h-8 rounded-full flex items-center justify-center transition-colors bg-blue-600 text-white shadow-md text-base font-bold" title="中字體">中</button>
+        <button onclick="changeFontSize('small', this)" class="font-btn w-8 h-8 rounded-full flex items-center justify-center transition-colors hover:bg-slate-100 text-slate-700 text-sm font-medium" title="小字體">小</button>
+        </div>
+    </div>
+
+    <header class="bg-gradient-to-r from-blue-900 to-slate-800 text-white py-16 px-4">
+        <div class="max-w-4xl mx-auto text-center">
+            <div class="inline-block bg-red-600 text-xs font-bold px-3 py-1 rounded-full mb-4 animate-pulse">緊急任務：2026 全球能源防禦情境</div>
+            <h2 class="text-4xl md:text-5xl font-black mb-6 leading-tight">如果世界斷了油，<br/>我們的生活會變成什麼樣子？</h2>
+            <p class="text-lg text-blue-100 max-w-2xl mx-auto italic">
+                「在模擬危機中，覺醒守護未來的公民韌性」
+            </p>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 mt-12 relative">
+        
+        <!-- ============================================== -->
+        <!-- TAB CONTENT: HOME                              -->
+        <!-- ============================================== -->
+        <div id="tab-home" class="tab-content fade-in block space-y-12">
+            <div class="flex items-center gap-3 mb-4">
+                <i class="fa-solid fa-house text-slate-800 text-3xl"></i>
+                <h3 class="text-3xl font-bold text-slate-800">首頁：守護者基地</h3>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div class="lg:col-span-2 space-y-8">
+                    <!-- Project Intro -->
+                    <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-100">
+                        <div class="flex items-center gap-2 mb-6">
+                            <div class="h-8 w-2 bg-blue-600 rounded-full"></div>
+                            <h4 class="text-2xl font-bold text-slate-800">【專案簡介】- 在危機中覺醒，為守護而學習</h4>
+                        </div>
+                        <p class="text-gray-700 leading-relaxed mb-6 font-medium">
+                            當能源不再只是課本上的名詞，而是決定生存的關鍵，我們該如何應對？
+                        </p>
+                        <p class="text-gray-600 leading-relaxed mb-6">
+                            本專案由 <strong>臺北市立大學學習與媒材設計學系</strong> 與 <strong>中油石油探索館</strong> 合作開發，大膽跳脫傳統教育框架，將 2026 年美伊戰爭模擬戰情轉化為數位學習情境，邀請學童化身為 <strong>能源守護者(指揮官)</strong>，在資源匱乏的邊緣挑戰國家的生存決策。
+                        </p>
+                        <div class="bg-blue-50 p-6 rounded-2xl border border-blue-100">
+                            <h5 class="font-bold text-blue-800 mb-2">系統化開發：精準轉化教學力</h5>
+                            <p class="text-gray-600 text-sm leading-relaxed">
+                                本專案導入 <strong>ADDIE 模型</strong> 進行嚴謹開發，精準對接 108 課綱的核心素養，確保教學不僅止於感官刺激，更能落實深層知識轉化。透過 <strong>ARCS 動機模型</strong> 的深度整合，我們將戰情的壓力轉化為解決問題的自我效能感，引發學生的學習興趣與信心。
+                            </p>
+                        </div>
+                        <div class="mt-8 text-gray-500 text-sm italic border-t pt-4">
+                            你知道嗎？臺灣的能源供應非常依賴國際航道的暢通。本專案透過 2026 年虛擬戰事場景，幫助你建立未來的能源素養。
+                        </div>
+                    </div>
+
+                    <!-- 網頁四大實戰亮點 -->
+                    <div class="bg-slate-900 text-white p-8 rounded-3xl shadow-xl">
+                        <h4 class="text-2xl font-bold mb-8 flex items-center gap-2 text-yellow-400">
+                            <i class="fa-solid fa-star"></i> 【網頁四大實戰亮點】
+                        </h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="border-l-2 border-yellow-400/30 pl-4">
+                                <h5 class="font-bold text-yellow-400 mb-2">1. 危機即動機</h5>
+                                <p class="text-xs text-slate-300 leading-relaxed">
+                                    引入「恐懼訴求」機制，透過石油腦斷絕與民生資材短缺的真實威脅，觸發學童對國家能源安全的使命感。
+                                </p>
+                            </div>
+                            <div class="border-l-2 border-yellow-400/30 pl-4">
+                                <h5 class="font-bold text-yellow-400 mb-2">2. 實力平衡決策</h5>
+                                <p class="text-xs text-slate-300 leading-relaxed">
+                                    將 90 天法定儲備量與氫能技術轉化為戰略籌碼。學童將戰爭風險的焦慮昇華為掌控大局的成就感。
+                                </p>
+                            </div>
+                            <div class="border-l-2 border-yellow-400/30 pl-4">
+                                <h5 class="font-bold text-yellow-400 mb-2">3. 打破邊界的遠遷移</h5>
+                                <p class="text-xs text-slate-300 leading-relaxed">
+                                    引導學生將戰略意識延伸至現實。看到外送餐盒或塑膠袋時，認知其為珍貴的石油腦價值。
+                                </p>
+                            </div>
+                            <div class="border-l-2 border-yellow-400/30 pl-4">
+                                <h5 class="font-bold text-yellow-400 mb-2">4. 開放教育資源 (OER)</h5>
+                                <p class="text-xs text-slate-300 leading-relaxed">
+                                    具備高度延展性與可複製性的教學系統，致力於成為國內能源教育的 OER 基礎模型。
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-6">
+                    <div class="bg-blue-900 text-white p-8 rounded-3xl shadow-lg h-fit">
+                        <h5 class="font-bold text-xl mb-4">快速開始指引</h5>
+                        <p class="text-blue-100 text-sm mb-6">點擊上方選單進入不同領域，這五個分區是平行的：</p>
+                        <ul class="space-y-4 text-sm">
+                            <li class="flex gap-3"><span class="text-xl">🎯</span> <div><strong>棋局：</strong>地緣政治與儲備策略</div></li>
+                            <li class="flex gap-3"><span class="text-xl">⚓</span> <div><strong>生命線：</strong>海上運輸與安全策略</div></li>
+                            <li class="flex gap-3"><span class="text-xl">🧪</span> <div><strong>盾牌：</strong>海外礦區與分餾技術</div></li>
+                            <li class="flex gap-3"><span class="text-xl">🌱</span> <div><strong>未來：</strong>本土綠能與公民行動</div></li>
+                            <li class="flex gap-3"><span class="text-xl">🎮</span> <div><strong>遊戲：</strong>挑戰你的能源戰略！<br><span class="text-xs text-blue-300">（遊玩前建議先閱讀各展區知識喔！）</span></div></li>
+                        </ul>
+                    </div>
+
+                    <!-- 團隊介紹 -->
+                    <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100">
+                        <h5 class="font-bold text-lg mb-4 flex items-center gap-2">
+                            <i class="fa-solid fa-users text-blue-600"></i> 【團隊介紹】
+                        </h5>
+                        <div class="space-y-4 text-sm">
+                            <div>
+                                <p class="font-bold text-slate-500 text-[10px] uppercase">指導教授</p>
+                                <p class="text-slate-800">方志華 教授、隋奇融 教授、游雅婷 教授</p>
+                            </div>
+                            <div>
+                                <p class="font-bold text-slate-500 text-[10px] uppercase">創作團隊</p>
+                                <p class="text-slate-700 leading-relaxed">吳三曼、謝佳君、郭羿萱、蘇詩晴、葉紀妍、邱翊甯</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 場館介紹 -->
+            <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-100 relative overflow-hidden group">
+                 <!-- 這是用 CSS 加上發光邊框效果的模擬 -->
+                 <div class="absolute inset-0 border-[3px] border-transparent rounded-3xl group-hover:border-purple-300/50 transition-colors duration-500 pointer-events-none"></div>
+                 <div class="absolute -inset-0.5 bg-gradient-to-r from-purple-200/30 to-blue-200/30 blur opacity-0 group-hover:opacity-100 transition duration-500 rounded-3xl pointer-events-none"></div>
+                 
+                 <div class="relative flex flex-col md:flex-row gap-8 items-start z-10">
+                    <div class="flex-1">
+                        <h4 class="text-2xl font-bold mb-6 text-slate-800 flex items-center gap-2">
+                            【場館介紹】中油石油探索館：洞察能源脈動的智慧窗口
+                        </h4>
+                        <p class="text-gray-600 leading-relaxed mb-6">
+                            位於臺北市信義區的中油石油探索館，是臺灣推廣能源素養的重要科普基地。館內展示氫能技術、地熱開發及淨零排放願景，將艱澀難懂的石油專業知識，透過深入淺出的科普手法，營造一個兼具深度體驗與快樂學習的石油知識探索場域。
+                        </p>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-gray-600 mb-6">
+                            <div class="flex items-center gap-2"><i class="fa-solid fa-location-dot text-blue-600 w-4"></i> 臺北市信義區松仁路 3 號</div>
+                            <div class="flex items-center gap-2"><i class="fa-regular fa-clock text-blue-600 w-4"></i> 週一至週五 09:00 - 17:00</div>
+                            <div class="flex items-center gap-2 col-span-1 sm:col-span-2"><i class="fa-solid fa-circle-check text-green-600 w-4"></i> 免費入場 (週末及國定假日休館)</div>
+                        </div>
+                        <a href="https://www.cpc.com.tw/cp.aspx?n=2886" target="_blank" rel="noreferrer" class="inline-flex items-center gap-1 text-blue-600 font-bold hover:underline">
+                            前往官網了解更多 <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                        </a>
+                    </div>
+                    
+                    <!-- 替換成真實圖片或更美觀的 Placeholder -->
+                    <div class="w-full md:w-64 aspect-video rounded-2xl overflow-hidden shadow-md flex-shrink-0 relative group/img cursor-pointer">
+                        <!-- 可以替換 img src 為實際場館圖案 URL -->
+                        <img src="https://scontent.ftpe8-1.fna.fbcdn.net/v/t1.6435-9/137200116_3316260028478567_362024358686814188_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=13d280&_nc_ohc=mgatl3UPAXYQ7kNvwFiU8AR&_nc_oc=AdppIrX8mf8ExLeHhm7IjTa-6RWycDYXca1yPKWEvwVItdtVmcguV9sy6o7RSoE7lo6RnGe8BqEPPwRcRxdJDX5O&_nc_zt=23&_nc_ht=scontent.ftpe8-1.fna&_nc_gid=5LYwDslN4tiqwp6Ye2ZXLg&_nc_ss=7b2a8&oh=00_Af45QH4uqcwmvxMlmjN2rv8grICkUdeRB6rzpVrLdiYR5w&oe=6A2822E6" alt="中油石油探索館實景" class="w-full h-full object-cover transition-transform duration-500 group-hover/img:scale-105">
+                        <div class="absolute inset-0 bg-black/10 group-hover/img:bg-transparent transition-colors"></div>
+                        <div class="absolute bottom-2 right-2 bg-black/60 text-white text-[10px] px-2 py-1 rounded">點擊查看大圖</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 資訊來源區塊 -->
+            <div class="bg-slate-50 p-8 rounded-3xl border border-slate-200">
+                <h4 class="text-xl font-bold mb-6 text-slate-800 flex items-center gap-2">
+                    <i class="fa-solid fa-book-open text-blue-600"></i> 【資訊來源與參考資料】
+                </h4>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-sm">
+                    <div class="space-y-1">
+                        <h5 class="font-bold text-blue-900 underline decoration-blue-200">情境背景</h5>
+                        <p class="text-gray-500">2026 美伊戰爭地緣政治與航道封鎖模擬，融入戰時危機教學設計。</p>
+                    </div>
+                    <div class="space-y-1">
+                        <h5 class="font-bold text-blue-900 underline decoration-blue-200">核心知識</h5>
+                        <p class="text-gray-500">中油石油探索館實體展項「石油的一生」、航道分布及接收站模型。</p>
+                    </div>
+                    <div class="space-y-1">
+                        <h5 class="font-bold text-blue-900 underline decoration-blue-200">法律依據</h5>
+                        <p class="text-gray-500">中華民國《石油管理法》90 日法定儲備規範（政府 30 日、業者 60 日）。</p>
+                    </div>
+                    <div class="space-y-1">
+                        <h5 class="font-bold text-blue-900 underline decoration-blue-200">政策導航</h5>
+                        <p class="text-gray-500">經濟部能源署增氣減煤政策及 2026 年進口依存度 96% 統計數據。</p>
+                    </div>
+                    <div class="space-y-1">
+                        <h5 class="font-bold text-blue-900 underline decoration-blue-200">前瞻趨勢</h5>
+                        <p class="text-gray-500">整合中油氫能、CCS 技術研發，對接聯合國 SDG 7、12、13 國際指標。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- TAB CONTENT: GLOBAL (棋局)                     -->
+        <!-- ============================================== -->
+        <div id="tab-global" class="tab-content hidden fade-in">
+             <div class="flex items-center gap-3 mb-8">
+                <i class="fa-solid fa-earth-americas text-red-600 text-3xl"></i>
+                <h3 class="text-3xl font-bold">第一展區：全球能源棋局</h3>
+            </div>
+
+            <!-- 原有佈局：2026 戰時情境 -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+                <div class="bg-slate-900 rounded-3xl p-8 text-white shadow-2xl relative overflow-hidden">
+                    <div class="absolute top-4 right-4 bg-red-600 px-3 py-1 rounded font-bold text-xs animate-pulse">LIVE: 2026 警戒狀態</div>
+                    <h4 class="text-xl font-bold mb-6 flex items-center gap-2 text-yellow-500">
+                        <i class="fa-solid fa-triangle-exclamation"></i> 美伊衝突對全球航道的衝擊
+                    </h4>
+                    <div class="aspect-video bg-slate-800 rounded-xl border border-slate-700 flex items-center justify-center mb-6 relative group">
+                        <div class="text-slate-500 text-center p-4 italic text-sm">
+                        <img src="map.jpg" >  
+						
+                            <div class="mt-2 text-red-400 font-bold uppercase tracking-widest">⚠️ 荷姆茲海峽封鎖中</div>
+                        </div>
+                    </div>
+                    <p class="text-slate-300 text-sm leading-relaxed italic">
+                        你知道嗎？全球有近 1/3 的原油要經過荷姆茲海峽。其實當戰爭爆發，這條路一被切斷，油輪就得繞道更遠的路，所以臺灣的油輪會面臨無法準時抵達的巨大風險。
+                    </p>
+                </div>
+
+                <div class="space-y-6">
+                    <h4 class="text-2xl font-bold text-slate-800">消失的石油腦：石油不只是燃料</h4>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="bg-white p-5 rounded-2xl shadow-sm border-t-4 border-red-500">
+                            <h5 class="font-bold mb-2">塑膠袋與包材危機</h5>
+                            <p class="text-xs text-gray-500">原料短缺導致價格飆漲。其實生活中幾乎所有包裝都來自石油腦，所以一旦缺油，免洗餐具、超市包裝袋都會面臨斷貨。</p>
+                        </div>
+                        <div class="bg-white p-5 rounded-2xl shadow-sm border-t-4 border-red-500">
+                            <h5 class="font-bold mb-2">醫療與紡織荒</h5>
+                            <p class="text-xs text-gray-500">你知道醫療口罩、排汗衫、球鞋底也是石油做的嗎？其實原油就是這些物資的靈魂，所以缺油會讓醫療與民生物資產量受限。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 油價天平 -->
+            <div class="bg-white rounded-3xl p-10 shadow-lg border border-slate-100 mb-12">
+                <div class="text-center mb-8">
+                    <h4 class="text-2xl font-bold mb-2">互動面板：油價天平</h4>
+                    <p class="text-gray-500">滑動油價按鈕，觀察右側生活成本的連鎖反應：</p>
+                </div>
+                <div class="max-w-2xl mx-auto">
+                    <div class="text-center mb-4">
+                        <span class="text-3xl font-black text-red-600" id="oil-price-display">$80</span>
+                    </div>
+                    <input 
+                        type="range" min="33" max="150" value="80" 
+                        oninput="updateOilPrice(this.value)"
+                        class="w-full h-3 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-red-600"
+                        id="oil-slider"
+                    />
+                    <!-- 實時數字顯示 (已內建在上方 id="oil-price-display") -->
+                    <div class="flex justify-between text-xs font-bold mt-4 text-slate-500 relative">
+                        <span class="absolute left-0 -translate-x-1/2 top-4">正常時期 ($33)</span>
+                        <span class="absolute right-0 translate-x-1/2 top-4">戰時衝擊 ($150)</span>
+                    </div>
+                    
+                    <div class="mt-14 grid grid-cols-3 gap-6 text-center">
+                        <div><div class="text-2xl mb-1">🥖</div><div class="text-xs font-bold">麵包價格</div><div class="text-red-600 font-black" id="price-bread">$35</div></div>
+                        <div><div class="text-2xl mb-1">🚴</div><div class="text-xs font-bold">外送運費</div><div class="text-red-600 font-black" id="price-delivery">$40</div></div>
+                        <div><div class="text-2xl mb-1">🔌</div><div class="text-xs font-bold">電費壓力</div><div class="text-red-600 font-black" id="price-elec">$600</div></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 長篇閱讀區塊：與原有排版保持一致 -->
+            <div class="space-y-12 slide-in-from-bottom">
+                
+                <!-- 第一區塊：現場直擊 -->
+                <div class="bg-white p-8 md:p-10 rounded-3xl shadow-sm border border-slate-200">
+                    <h4 class="text-3xl font-black mb-6 text-red-600 flex items-center gap-3">
+                        <span class="animate-pulse">🔴</span> 現場直擊：2026 全球能源棋局與海上大封鎖！
+                    </h4>
+                    <p class="text-gray-700 leading-relaxed mb-8 text-lg">
+                        這不是電影劇本，而是我們現在正遭遇的挑戰！之前打開新聞，你可能會看到中東地區的局勢非常緊張，美伊衝突讓這場「全球能源棋局」變得險象環生。
+                    </p>
+                    
+                    <div class="space-y-8">
+                        <div>
+                            <h5 class="text-xl font-bold text-slate-800 mb-4 border-l-4 border-red-500 pl-3">【被鎖上的「能源咽喉」：荷姆茲海峽】</h5>
+                            <p class="text-gray-600 leading-relaxed mb-4">
+                                在遙遠的中東，有一條窄窄的水道叫作「荷姆茲海峽」。你知道嗎？全世界有將近 1/3 的原油每天都要從這道門經過。但現在因為戰爭爆發，這道大門被封鎖了！
+                            </p>
+                            <p class="font-bold text-slate-800 mb-3">這對臺灣有什麼影響呢？</p>
+                            <ul class="space-y-3 pl-2">
+                                <li class="flex items-start gap-2 text-gray-600">
+                                    <i class="fa-regular fa-compass text-red-500 mt-1"></i>
+                                    <span><strong>「海上大繞道」：</strong> 原本直直走就能回家的中油油輪，現在被迫要繞過大半個地球。這就像是原本下樓就能買到的早餐，現在要爬過三座山才買得到，不僅耗時，更有可能無法準時抵達臺灣的風險。</span>
+                                </li>
+                                <li class="flex items-start gap-2 text-gray-600">
+                                    <i class="fa-solid fa-triangle-exclamation text-red-500 mt-1"></i>
+                                    <span><strong>斷油危機的考驗：</strong> 國際油價就像失控的雲霄飛車不斷往上衝，許多國家都在擔心家裡的車子會沒油可加、工廠會停工。</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <h5 class="text-xl font-bold text-slate-800 mb-4 border-l-4 border-blue-500 pl-3">【中油的「預言家」準備：為什麼我們不怕？】</h5>
+                            <p class="text-gray-600 leading-relaxed mb-4">
+                                幸好，中油早就在幾年前就開始佈局，這就是為什麼我們現在還能安心吹冷氣的原因：
+                            </p>
+                            <ul class="space-y-3 pl-2 mb-6">
+                                <li class="flex items-start gap-2 text-gray-600">
+                                    <i class="fa-solid fa-earth-americas text-blue-500 mt-1"></i>
+                                    <span><strong>分散投資的「雞蛋哲學」：</strong> 中油不把雞蛋放在同一個籃子裡！除了中東，我們在澳洲、美國、非洲查德都有自己的礦區（還記得我們的秘密農場嗎？）。即使中東航道封住了，其他地方的油還是能送回來。</span>
+                                </li>
+                                <li class="flex items-start gap-2 text-gray-600">
+                                    <i class="fa-solid fa-shield-halved text-blue-500 mt-1"></i>
+                                    <span><strong>能源生命線的韌性：</strong> 中油的「一、二、三接」接收站分散在臺灣北中南，就像有三個不同的進貨門。萬一其中一個受到威脅，其他的還是能持續供電，這就是我們的「發電韌性」。</span>
+                                </li>
+                                <li class="flex items-start gap-2 text-gray-600">
+                                    <i class="fa-solid fa-droplet text-blue-500 mt-1"></i>
+                                    <span><strong>地底下的備份：</strong> 臺灣各地巨大的儲油槽和儲氣槽，就像是「超級大行動電源」，已經存好了足夠的存貨，讓我們有能力度過這場國際風暴。</span>
+                                </li>
+                            </ul>
+                            <p class="text-blue-800 font-medium bg-blue-50 p-4 rounded-xl border border-blue-100">
+                                2026 年的這場衝突，讓我們看見了「能源自主」有多重要。因為中油在全世界的佈局，臺灣才有一面堅固的「技術盾牌」，守護著每一個家庭的燈火！
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Knowledge Box HTML -->
+                    <div class="p-6 rounded-2xl my-4 border-l-8 shadow-sm transition-all hover:shadow-md bg-blue-50 border-blue-500">
+                        <div class="flex items-center gap-2 mb-2">
+                            <i class="fa-solid fa-circle-info text-blue-600"></i>
+                            <h4 class="font-bold text-lg text-gray-800">【 探索館知識小錦囊】</h4>
+                        </div>
+                        <div class="text-gray-700 leading-relaxed text-base">
+                            <ul class="space-y-3 text-sm">
+                                <li><strong>戰略儲備：</strong> 法律規定臺灣必須儲存足夠天數的石油，這就是為了在像 2026 這種戰爭時刻，保護我們不會突然沒油可用。</li>
+                                <li><strong>能源外交：</strong> 中油與世界各國（如美國、澳洲）簽訂長期合約，就像是結交了可靠的盟友，在危急時刻伸出援手。</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 第二區塊：石油的變身魔術 -->
+                <div class="bg-white p-8 md:p-10 rounded-3xl shadow-sm border border-slate-200">
+                    <h4 class="text-3xl font-black mb-6 text-purple-700 flex items-center gap-3">
+                        <i class="fa-solid fa-flask text-2xl"></i> 石油的變身魔術：消失的「石油腦」大危機！
+                    </h4>
+                    <p class="text-gray-700 leading-relaxed mb-8 text-lg">
+                        小朋友，你以為石油只能變成汽油讓車子跑嗎？其實，石油還是我們生活中的「變身大師」！在中油的分餾塔裡，有一種重要的東西叫「石油腦」（Naphtha），它雖然不能直接加進車子，卻是你身邊所有東西的靈魂喔！
+                    </p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                        <div class="bg-slate-50 p-6 rounded-2xl border border-slate-100">
+                            <h5 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
+                                <span class="text-purple-500">📦</span>【 塑膠袋與包材危機：消失的包裝盒？】
+                            </h5>
+                            <p class="text-gray-600 mb-4 text-sm">想像一下，如果你去超市買餅乾，卻發現沒有包裝袋、沒有保鮮膜，甚至連裝鮮奶的瓶子都沒有了？</p>
+                            <ul class="space-y-2 text-sm text-gray-600">
+                                <li><strong class="text-purple-700">萬能原料：</strong> 生活中幾乎所有的塑膠包裝，都是從石油腦變出來的。</li>
+                                <li><strong class="text-purple-700">價格飆漲：</strong> 當國際油路不穩、原油變少時，石油腦也會跟著短缺。這會讓免洗餐具、超市包裝袋因為材料不夠而價格變貴，甚至面臨斷貨的危機，我們買東西就會變得很不方便！</li>
+                            </ul>
+                        </div>
+                        <div class="bg-slate-50 p-6 rounded-2xl border border-slate-100">
+                            <h5 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
+                                <span class="text-purple-500">👕</span>【 醫療與紡織荒：衣服與口罩也是油做的？】
+                            </h5>
+                            <p class="text-gray-600 mb-4 text-sm">不只是塑膠袋，連你身上穿的衣服、生病時戴的口罩，其實都躲著石油寶寶喔！</p>
+                            <ul class="space-y-2 text-sm text-gray-600">
+                                <li><strong class="text-purple-700">神奇的纖維：</strong> 你最喜歡穿的排汗衫、運動球鞋的鞋底，還有保護我們健康的醫療口罩，通通都是石油腦經過化學變身後的成果。</li>
+                                <li><strong class="text-purple-700">民生物資告急：</strong> 如果沒有了原油這個「靈魂」，工廠就做不出防護衣和口罩。所以，一旦缺油，不只是車子跑不動，連我們穿的衣服、醫生的手術服都會產量受限，這才是真正的生活大危機！</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Knowledge Box HTML -->
+                    <div class="p-6 rounded-2xl my-4 border-l-8 shadow-sm transition-all hover:shadow-md bg-blue-50 border-blue-500">
+                        <div class="flex items-center gap-2 mb-2">
+                            <i class="fa-solid fa-circle-info text-blue-600"></i>
+                            <h4 class="font-bold text-lg text-gray-800">【 探索館知識小錦囊：石油的「食衣住行」】</h4>
+                        </div>
+                        <div class="text-gray-700 leading-relaxed text-base">
+                             <ul class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+                                <li><strong class="text-blue-700">食：</strong> 雖然我們不吃油，但盛裝食物的容器、保鮮膜都離不開它。</li>
+                                <li><strong class="text-blue-700">衣：</strong> 人造纖維（如聚酯纖維）讓衣服輕便又好洗。</li>
+                                <li><strong class="text-blue-700">住：</strong> 油漆、水管、地墊，石油無處不在！</li>
+                                <li><strong class="text-blue-700">行：</strong> 除了燃料，輪胎也是石油做的喔！</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6 flex justify-end">
+                        <a href="https://www.cpc.com.tw/cp.aspx?n=92#Accesskey_U" target="_blank" rel="noreferrer" class="inline-flex items-center gap-1 text-purple-600 font-bold hover:underline hover:text-purple-800 transition-colors">
+                            Learnmore：台灣中油股份有限公司：柴、汽、燃油價格 <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 第三區塊：深度解析 90 天法定儲備 -->
+                <div class="bg-white p-8 md:p-10 rounded-3xl shadow-sm border border-orange-200 border-t-8">
+                    <h4 class="text-3xl font-black mb-6 text-orange-600 flex items-center gap-3">
+                        <i class="fa-solid fa-shield-halved text-2xl"></i> 深度解析：為什麼是「90 天」法定儲備？臺灣的救命存款！
+                    </h4>
+                    <p class="text-gray-700 leading-relaxed mb-8 text-lg">
+                        你有存零用錢的習慣嗎？為了保護全臺灣人的生活，中油也幫國家存了一大筆「能量存款」。這筆存款的數字非常神祕，就是「90 天」！
+                    </p>
+
+                    <div class="space-y-8">
+                        <div>
+                            <h5 class="text-xl font-bold text-slate-800 mb-3 flex items-center gap-2"><span class="text-orange-500">📌</span>【 90 天這個數字怎麼來的？】</h5>
+                            <p class="text-gray-600 leading-relaxed ml-7">
+                                這不是隨便猜的喔！中油會計算臺灣前一年「平均每天要用掉多少油」，然後把它乘以 90(天)。這代表即使海上的油輪因為 2026 的戰爭封鎖完全進不來，我們地底下的油槽還是能讓臺灣維持正常運轉整整三個月！
+                            </p>
+                        </div>
+
+                        <div class="ml-7">
+                            <h5 class="text-xl font-bold text-slate-800 mb-4 border-l-4 border-orange-400 pl-3 -ml-7">【90 天儲備的「責任分工」】</h5>
+                            <p class="text-gray-600 mb-4">根據《石油管理法》第 24 條的規定，這 90 天是這樣分配的：</p>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="bg-orange-50 p-5 rounded-2xl">
+                                    <h6 class="font-black text-orange-800 mb-3 text-lg">政府儲備（30 天）</h6>
+                                    <ul class="space-y-2 text-sm text-gray-700">
+                                        <li><strong>誰出錢？</strong> 由政府運用「石油基金」來購買石油。</li>
+                                        <li><strong>存哪裡？</strong> 雖然是政府的油，但為了節省成本，通常會委託像中油這樣的專業業者幫忙儲存和管理（這叫「寄託儲油」）。</li>
+                                        <li><strong>任務：</strong> 這是國家最後的防線，專門用來應對極端的戰爭或災害。</li>
+                                    </ul>
+                                </div>
+                                <div class="bg-orange-50 p-5 rounded-2xl">
+                                    <h6 class="font-black text-orange-800 mb-3 text-lg">業者儲備（60 天）</h6>
+                                    <ul class="space-y-2 text-sm text-gray-700">
+                                        <li><strong>誰負責？</strong> 由中油（CPC）以及其他油品輸入業者負責。</li>
+                                        <li><strong>規定：</strong> 這些公司必須隨時保持至少 60 天的銷售量在油槽裡，不能隨便賣光。</li>
+                                        <li><strong>任務：</strong> 確保市場平時供應穩定，萬一船期稍微延遲（像是遇到颱風或航道堵塞），國內加油站還是有油可以加。</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h5 class="text-xl font-bold text-slate-800 mb-3 flex items-center gap-2"><span class="text-orange-500">📌</span>【 誰能先用這些「救命油」？】</h5>
+                            <p class="text-gray-600 leading-relaxed ml-7 mb-2">這筆存款是為了「應急」用的，所以要分給最重要的地方：</p>
+                            <ul class="list-disc ml-12 space-y-2 text-gray-600">
+                                <li><strong>守護英雄：</strong> 國防軍隊的飛機坦克、救災用的消防車與救護車。</li>
+                                <li><strong>城市心臟：</strong> 醫院的發電機、大眾運輸（捷運、公車）以及發電廠。</li>
+                            </ul>
+                            <p class="text-gray-600 ml-7 mt-2">有了這 90 天的保障，就算在危急時刻，城市也不會陷入混亂癱瘓。</p>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <div>
+                                <h5 class="text-xl font-bold text-slate-800 mb-3 flex items-center gap-2"><span class="text-green-500">🛡️</span>【這筆存款有什麼好處？】</h5>
+                                <p class="text-gray-600 leading-relaxed ml-7">
+                                    面對 2026 的戰時封鎖，這 90 天就是我們的「緩衝盾牌」。它給了政府寶貴的時間去尋求國際盟友的幫助，或者調整更好的應對策略。這是臺灣最強大的「韌性」，讓我們面對挑戰時不會驚慌失措。
+                                </p>
+                            </div>
+                            <div>
+                                <h5 class="text-xl font-bold text-slate-800 mb-3 flex items-center gap-2"><span class="text-red-500">💰</span>【存這筆錢有什麼「代價」嗎？】</h5>
+                                <p class="text-gray-600 leading-relaxed ml-7 mb-2">就像存錢需要銀行，存油也需要蓋超級巨大的儲油槽。</p>
+                                <ul class="list-disc ml-12 space-y-2 text-gray-600 text-sm">
+                                    <li><strong>成本極高：</strong> 維持這筆儲備非常昂貴！中油每年都要花大筆的錢去蓋油槽、定期檢查油品有沒有壞掉、確保儲存環境安全。</li>
+                                    <li><strong>昂貴的安全費：</strong> 這就像是為了安全而付出的「保險費」，雖然很貴，但為了守護家園，這是絕對不能省的錢！</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="bg-yellow-50 border border-yellow-200 p-6 rounded-2xl ml-7">
+                            <h5 class="text-lg font-bold text-yellow-800 mb-3">⚠️【 2026 戰時小觀念：我們存的比法律規定的還多！】</h5>
+                            <p class="text-gray-700 text-sm mb-2">雖然法律規定是 30 + 60 = 90 天，但面對 2026 年不穩定的國際情勢，中油與政府其實存得更勤勞：</p>
+                            <ul class="list-disc ml-5 space-y-1 text-sm text-gray-700">
+                                <li><strong>最新現況：</strong> 目前臺灣實際的石油儲備量通常維持在 100 天到 140 天以上，遠高於法定標準。</li>
+                                <li><strong>為什麼要多存？</strong> 因為多存幾天，臺灣在面對封鎖時，就多了幾天思考對策的「緩衝期」。</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Knowledge Box Warning HTML -->
+                    <div class="p-6 rounded-2xl my-4 border-l-8 shadow-sm transition-all hover:shadow-md bg-orange-50 border-orange-500">
+                        <div class="flex items-center gap-2 mb-2">
+                            <i class="fa-solid fa-circle-info text-orange-600"></i>
+                            <h4 class="font-bold text-lg text-gray-800">【石油探索館知識小錦囊】</h4>
+                        </div>
+                        <div class="text-gray-700 leading-relaxed text-base">
+                             <ul class="space-y-3 text-sm">
+                                <li><strong class="text-orange-800">油槽在哪裡？</strong> 中油在全臺灣很多地方都藏有神祕的油槽，有些甚至藏在山洞裡或地底下，就是為了防止意外發生。</li>
+                                <li><strong class="text-orange-800">安全儲備法：</strong> 這是臺灣的法律規定喔！中油身為國營事業，最重要的任務就是確保這 90 天的存量隨時都是滿的。</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 flex justify-end">
+                        <a href="https://share.google/4RnphAxppQlttxs0D" target="_blank" rel="noreferrer" class="inline-flex items-center gap-1 text-orange-600 font-bold hover:underline hover:text-orange-800 transition-colors">
+                            Learnmore：90天儲備補充連結：立法院議事暨公報資訊網 <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- TAB CONTENT: SEA (生命線)                      -->
+        <!-- ============================================== -->
+        <div id="tab-sea" class="tab-content hidden fade-in slide-in-from-bottom">
+             <div class="flex items-center gap-3 mb-8">
+                <i class="fa-solid fa-ship text-blue-600 text-3xl"></i>
+                <h3 class="text-3xl font-bold">第二展區：跨海能源生命線</h3>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+                <div class="space-y-6">
+                    <h4 class="text-2xl font-bold text-slate-800">能源絲路與 LNG 戰略</h4>
+                    <p class="text-gray-600 text-sm leading-relaxed">
+                        你知道嗎？臺灣 96% 的能源靠進口。其實從波斯灣到大林港這條路，就像是我們在海上的血管。
+                    </p>
+                     <!-- Knowledge Box HTML -->
+                    <div class="p-6 rounded-2xl my-4 border-l-8 shadow-sm transition-all hover:shadow-md bg-blue-50 border-blue-500">
+                        <div class="flex items-center gap-2 mb-2">
+                            <i class="fa-solid fa-circle-info text-blue-600"></i>
+                            <h4 class="font-bold text-lg text-gray-800">為什麼要增氣減煤？</h4>
+                        </div>
+                        <div class="text-gray-700 leading-relaxed text-base">
+                            其實... 在戰時情境下，天然氣 (LNG) 接收站的佈局是為了「發電韌性」。透過一、二、三接的分散配置，萬一某一處受損，其他接收站仍能維持供電，這就是為什麼這是一項戰略布局。
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-4 rounded-3xl shadow-sm border border-slate-200">
+                    <div class="overflow-hidden rounded-2xl border border-slate-200 bg-slate-100">
+                        <img src="map4.jpg" alt="能源絲路航線圖：波斯灣到桃園、台中與大林港" class="w-full h-auto object-cover">
+                    </div>
+                </div>
+            </div>
+
+            <!-- 新增的長篇閱讀區塊 -->
+            <div class="space-y-12 slide-in-from-bottom">
+                
+                <!-- 第一區塊：跨海能源生命線 -->
+                <div class="bg-white p-8 md:p-10 rounded-3xl shadow-sm border border-slate-200">
+                    <h4 class="text-3xl font-black mb-6 text-blue-700 flex items-center gap-3">
+                        <i class="fa-solid fa-ship text-2xl"></i> 跨海能源生命線：臺灣的「能源絲路」與 LNG 戰略
+                    </h4>
+                    <p class="text-gray-700 leading-relaxed mb-8 text-lg">
+                        你有想過嗎？當你在家裡按下瓦斯爐開關、或是打開電燈時，那些能量其實是跨越了半個地球才來到你身邊的喔！中油在海上建立了一條神祕的「能源絲路」，保護臺灣的能量供應不中斷。
+                    </p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                        <!-- LNG 縮小燈 -->
+                        <div class="bg-blue-50 p-6 rounded-2xl border border-blue-100">
+                            <h5 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
+                                <span class="text-blue-500">🪄</span>【什麼是 LNG？超級縮小燈下的「液化天然氣」】
+                            </h5>
+                            <p class="text-gray-600 mb-4 text-sm">臺灣發電非常依賴「天然氣」，但天然氣是氣體，體積很大，要怎麼從國外運回來呢？中油用了像多啦 A 夢的「縮小燈」——也就是低溫液化技術。</p>
+                            <ul class="space-y-2 text-sm text-gray-600">
+                                <li><strong class="text-blue-700">超級變變變：</strong> 我們把天然氣冷卻到攝氏零下 162 度，它就會變成液體（簡稱 LNG）。</li>
+                                <li><strong class="text-blue-700">變小魔術：</strong> 變身成液體後，它的體積會直接縮小 600 倍！原本要 600 艘船才裝得下的氣，現在只要 1 艘船就夠了。</li>
+                            </ul>
+                        </div>
+
+                        <!-- 戰略盾牌 -->
+                        <div class="bg-blue-50 p-6 rounded-2xl border border-blue-100">
+                            <h5 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
+                                <span class="text-blue-500">🛡️</span>【戰略盾牌：能源絲路的守護】
+                            </h5>
+                            <p class="text-gray-600 mb-4 text-sm">為什麼這叫「生命線」呢？因為臺灣 96% 的能源都要靠進口。</p>
+                            <ul class="space-y-2 text-sm text-gray-600">
+                                <li><strong class="text-blue-700">分散風險：</strong> 中油的採購船隊就像勤勞的螞蟻，航線遍佈澳洲、卡達、美國等各個國家，這就是我們的「能源絲路」。</li>
+                                <li><strong class="text-blue-700">2026 安全靠山：</strong> 就算 2026 年國際局勢不穩定，只要這條生命線守得住、接收站的存貨充足，臺灣的燈就不會熄滅，工廠也能繼續生產好玩的玩具和厲害的電腦！</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- 接收站 -->
+                    <div class="mb-8">
+                        <h5 class="text-xl font-bold text-slate-800 mb-4 border-l-4 border-blue-500 pl-3">【LNG 接收站：臺灣的能量心臟】</h5>
+                        <p class="text-gray-600 leading-relaxed mb-4">
+                            這些載著 LNG 的「超大型保冷船」運到臺灣後，會停靠在像 <strong>永安、台中</strong> 這些地方的接收站。這裡有許多圓圓胖胖、長得像巨大養樂多瓶的儲氣槽，它們是臺灣的「能量存錢筒」。中油會在那裡把液體重新變回氣體，透過地底下的管線，送到發電廠和每個人的家裡。
+                        </p>
+                    </div>
+
+                    <!-- Knowledge Box HTML -->
+                    <div class="p-6 rounded-2xl my-4 border-l-8 shadow-sm transition-all hover:shadow-md bg-blue-50 border-blue-500">
+                        <div class="flex items-center gap-2 mb-2">
+                            <i class="fa-solid fa-circle-info text-blue-600"></i>
+                            <h4 class="font-bold text-lg text-gray-800">【石油探索館知識小錦囊】</h4>
+                        </div>
+                        <div class="text-gray-700 leading-relaxed text-base">
+                             <ul class="space-y-3 text-sm">
+                                <li><strong class="text-blue-800">為什麼天然氣是好朋友？</strong> 比起燃燒煤炭，天然氣產生的灰塵和廢氣少很多，是讓我們空氣變乾淨的關鍵角色。</li>
+                                <li><strong class="text-blue-800">保冷船的秘密：</strong> 運送 LNG 的大船有著特殊的隔熱裝置，就像一個超級巨大的行動保冰箱，確保氣體在長途旅行中都不會「融化」變回氣體。</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 flex justify-end">
+                        <a href="https://share.google/Jw8GW66RkoE7t6Suh" target="_blank" rel="noreferrer" class="inline-flex items-center gap-1 text-blue-600 font-bold hover:underline hover:text-blue-800 transition-colors">
+                            Learnmore：經濟部：LNG陸運供應模式管理政策及發展策略(PDF) <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 第二區塊：增氣減煤 -->
+                <div class="bg-white p-8 md:p-10 rounded-3xl shadow-sm border border-green-200 border-t-8">
+                    <h4 class="text-3xl font-black mb-6 text-green-700 flex items-center gap-3">
+                        <i class="fa-solid fa-leaf text-2xl"></i> 為什麼要「增氣減煤」？臺灣的能量守護計畫
+                    </h4>
+                    <p class="text-gray-700 leading-relaxed mb-8 text-lg">
+                        你有發現家裡的電燈、冷氣，還有路上的路燈，背後的電力來源正在悄悄改變嗎？中油正努力推動「增氣減煤」，這不只是為了空氣好，更是為了讓臺灣更有「韌性」！
+                    </p>
+
+                    <div class="space-y-8">
+                        <div>
+                            <h5 class="text-xl font-bold text-slate-800 mb-3 flex items-center gap-2"><span class="text-green-500">☁️</span>【理由 1：讓天空更藍（環保好朋友）】</h5>
+                            <p class="text-gray-600 leading-relaxed ml-7">
+                                「煤炭」燃燒時會產生比較多的灰塵和煙霧，就像老舊機車噴黑煙一樣；而「天然氣（LNG）」燃燒起來非常乾淨，產生的廢氣少很多。所以，多用氣、少燒煤，我們就能擁有更多藍天，呼吸更健康的空氣！
+                            </p>
+                        </div>
+
+                        <div>
+                            <h5 class="text-xl font-bold text-slate-800 mb-3 flex items-center gap-2"><span class="text-green-500">🛡️</span>【理由 2：打造臺灣的「發電韌性」（戰略守護者）】</h5>
+                            <p class="text-gray-600 leading-relaxed ml-7 mb-4">
+                                你一定聽過電腦要備份，其實臺灣的能源也要「備份」！天然氣是透過海上巨大的 LNG 船運回來的，而這些船停靠的地方就叫做「接收站」。中油在臺灣的不同地方蓋了接收站，這就是關鍵的戰略布局：
+                            </p>
+                            <div class="ml-7 bg-green-50 p-5 rounded-2xl border border-green-100">
+                                <ul class="space-y-3 text-sm text-gray-700">
+                                    <li><strong class="text-green-800">一接、二接、三接：</strong> 就像是在臺灣的北、中、南都蓋了「超級能量港口」。</li>
+                                    <li><strong class="text-green-800">分散風險：</strong> 想像一下，如果我們只有一個港口，萬一遇到強大颱風、發生意外，甚至是像戰時情境下港口受損，全臺灣可能就會沒電可用。</li>
+                                    <li><strong class="text-green-800">分散配置：</strong> 透過這三個接收站互相支援，萬一其中一個受傷了，其他的接收站還是能趕快把能源送出去，維持醫院、學校和家裡的供電。這就是所謂的「發電韌性」——讓臺灣變得很堅強，不容易被打倒！</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h5 class="text-xl font-bold text-slate-800 mb-3 flex items-center gap-2"><span class="text-green-500">✨</span>【未來的守護盾牌】</h5>
+                            <p class="text-gray-600 leading-relaxed ml-7">
+                                到 2026 年，隨著這些接收站（如：觀塘第三接收站）更完整地串聯在一起，臺灣就像是穿上了一層隱形的盔甲。無論遇到什麼挑戰，這條「跨海能源生命線」都能穩穩地牽著我們，讓臺灣始終亮起希望的光！
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="mt-8">
+                         <!-- Knowledge Box HTML -->
+                        <div class="p-6 rounded-2xl my-4 border-l-8 shadow-sm transition-all hover:shadow-md bg-blue-50 border-blue-500">
+                            <div class="flex items-center gap-2 mb-2">
+                                <i class="fa-solid fa-circle-info text-blue-600"></i>
+                                <h4 class="font-bold text-lg text-gray-800">【石油探索館知識小錦囊】：一接、二接、三接在哪裡？</h4>
+                            </div>
+                            <div class="text-gray-700 leading-relaxed text-base">
+                                <ul class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm mt-2">
+                                    <li class="bg-white p-4 rounded-xl border border-blue-100 shadow-sm text-center">
+                                        <strong class="text-blue-700 text-lg block mb-1">一接</strong>
+                                        <span class="block font-bold text-gray-800 mb-1">高雄永安</span>
+                                        <span class="text-gray-500 text-xs">（臺灣第一個 LNG 家）</span>
+                                    </li>
+                                    <li class="bg-white p-4 rounded-xl border border-blue-100 shadow-sm text-center">
+                                        <strong class="text-blue-700 text-lg block mb-1">二接</strong>
+                                        <span class="block font-bold text-gray-800 mb-1">台中港</span>
+                                        <span class="text-gray-500 text-xs">（供應中部的心臟）</span>
+                                    </li>
+                                    <li class="bg-white p-4 rounded-xl border border-blue-100 shadow-sm text-center">
+                                        <strong class="text-blue-700 text-lg block mb-1">三接</strong>
+                                        <span class="block font-bold text-gray-800 mb-1">桃園觀塘</span>
+                                        <span class="text-gray-500 text-xs">（守護北部用電的關鍵戰友）</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- TAB CONTENT: TECH (盾牌)                       -->
+        <!-- ============================================== -->
+        <div id="tab-tech" class="tab-content hidden fade-in zoom-in">
+             <div class="flex items-center gap-3 mb-8">
+                <i class="fa-solid fa-flask text-purple-600 text-3xl"></i>
+                <h3 class="text-3xl font-bold">第三展區：科技盾牌與研發</h3>
+            </div>
+
+            <!-- 原有佈局：維持架構不更動 -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-12">
+                
+                <!-- 左側小卡 -->
+                <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-100">
+                    <h4 class="text-xl font-bold mb-4 text-purple-800">海外礦區：能源自主</h4>
+                    <p class="text-sm text-gray-600 mb-4">
+                        你知道嗎？中油在查德、澳洲擁有自有礦區。其實... 這就像是我們在國外「自己開加油站」。
+                    </p>
+                    <p class="text-sm font-bold text-slate-800">
+                        所以當 2026 國際油路不穩時，自有礦區就是臺灣最穩固的靠山！
+                    </p>
+                    <div class="mt-6 overflow-hidden rounded-xl border border-slate-200 bg-slate-100">
+                        <img src="map2.jpg" alt="查德與澳洲礦區分佈圖" class="w-full h-auto object-cover">
+                    </div>
+                    <div class="mt-4 overflow-hidden rounded-xl border border-slate-200 bg-slate-100">
+                        <img src="map3.jpg" alt="海外礦區分佈補充圖" class="w-full h-auto object-cover">
+                    </div>
+                </div>
+
+                <!-- 右側大卡：互動式分餾實驗室 -->
+                <div class="bg-white p-8 rounded-3xl shadow-lg border-2 border-purple-100 lg:col-span-2">
+                    <h4 class="text-xl font-bold mb-6 text-purple-800">互動式分餾實驗室</h4>
+                    
+                    <!-- 分餾實驗室文字區域 -->
+                    <div class="space-y-6 mb-8">
+                        <p class="text-gray-700 leading-relaxed text-sm">
+                            你知道嗎？剛從地底挖出來的原油，其實是很多東西混在一起的「大雜燴」喔！我們不能直接把它加進車子裡。這時候，中油就會把它送進煉油廠的巨大魔法棒——「分餾塔」。只要控制不同的溫度，原油就會神奇地分開，變身成我們生活中的各種寶物！
+                        </p>
+                        
+                        <div>
+                            <h5 class="font-bold text-slate-800 mb-2">【為什麼石油叫做「黑金」？】</h5>
+                            <p class="text-gray-600 leading-relaxed text-sm">
+                                因為石油非常珍貴，就像地底下的黃金一樣！它不只能變成讓汽車跑動的汽油，我們生活中的食、衣、住、行，幾乎都離不開它。從你腳上的運動鞋、身上的排汗衫、買東西用的塑膠袋，到寫字用的原子筆，通通都是石油變出來的。因為它用途超級廣、價值非常高，所以才有了這個響亮的外號。
+                            </p>
+                        </div>
+
+                        <div>
+                            <h5 class="font-bold text-slate-800 mb-2">【中油小百科：魔法分餾塔的秘密】</h5>
+                            <p class="text-gray-600 leading-relaxed text-sm">
+                                在台灣中油的煉油廠裡（例如：桃園廠或大林廠），你遠遠就能看到許多高聳入雲、長得像巨大鉛筆的圓柱形塔，那些就是守護臺灣能源的「分餾塔」。它們就像是不休息的巨人，每天 24 小時不停工，確保臺灣的車子有油跑、家裡有火可以煮飯！
+                                <br/><br/>
+                                原油雖然看起來是一坨黑色的液體，但裡面其實躲著很多好朋友，像是汽油、煤油、柴油。中油會把原油送進一個高高的「分餾塔」，利用「加熱控制溫度」的方法，把大家一一找出來。
+                            </p>
+                        </div>
+
+                        <!-- Knowledge Box HTML -->
+                        <div class="p-6 rounded-2xl my-4 border-l-8 shadow-sm transition-all hover:shadow-md bg-blue-50 border-blue-500">
+                            <div class="flex items-center gap-2 mb-2">
+                                <i class="fa-solid fa-circle-info text-blue-600"></i>
+                                <h4 class="font-bold text-lg text-gray-800">【知識小錦囊: 什麼是「分餾」？】</h4>
+                            </div>
+                            <div class="text-gray-700 leading-relaxed text-base">
+                                <p class="text-sm mb-3">
+                                    分餾（Fractional Distillation）聽起來很專業，其實原理很簡單，就是利用每種物質「沸點」（也就是要變成氣體的溫度）不同的原理。<br/>
+                                    想像一下，原油裡住著各種不同個性的「油寶寶」：
+                                </p>
+                                <ul class="space-y-2 text-sm pl-2">
+                                    <li><strong class="text-purple-800">怕熱的輕質寶寶：</strong> 有的寶寶很怕熱，稍微加熱（沸點低）就會變成氣體，輕飄飄地往塔的最頂端衝，它們最後會變成我們用的瓦斯。</li>
+                                    <li><strong class="text-purple-800">愛玩的中間寶寶：</strong> 溫度再高一點，愛跑跳的寶寶就變成了汽油和柴油。</li>
+                                    <li><strong class="text-purple-800">耐熱的重質寶寶：</strong> 有的寶寶很耐熱，要變得很燙、很燙（沸點高）才會動，最後留在塔底的，就是黑黑黏黏、用來舖馬路的瀝青。</li>
+                                </ul>
+                                <p class="text-sm mt-3">
+                                    透過這座高高的分餾塔，我們就像是在玩「分類遊戲」，能把住在不同樓層的油寶寶一網打盡，讓每一滴「黑金」都能發揮最大的本領！
+                                </p>
+                            </div>
+                        </div>
+
+                        <p class="font-bold text-purple-700">快來點擊下方看看「黑金」的變身吧：</p>
+                    </div>
+
+                    <!-- 互動按鈕區塊 (JS實作) -->
+                    <div class="flex flex-col md:flex-row gap-8">
+                        <div class="flex-1 space-y-3">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2" id="distill-buttons">
+                                <!-- Buttons generated by JS -->
+                            </div>
+                        </div>
+                        <div class="w-full md:w-64 bg-slate-100 rounded-3xl p-6 flex flex-col items-center justify-between border shadow-inner">
+                            <div class="relative w-20 h-64 bg-slate-300 rounded-t-full border-4 border-slate-400 overflow-hidden">
+                                <div id="distill-liquid" class="absolute bottom-0 w-full transition-all duration-700 bg-gradient-to-t from-black to-purple-800" style="height: 0%"></div>
+                            </div>
+                            <div class="mt-4 text-center h-16 flex items-center justify-center">
+                                <div id="distill-info" class="text-[10px] text-slate-400 text-center">請點擊左側進行分餾</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 新增的長篇閱讀區塊 -->
+            <div class="space-y-12 slide-in-from-bottom">
+                
+                <!-- 第一區塊：海外礦區 -->
+                <div class="bg-white p-8 md:p-10 rounded-3xl shadow-sm border border-slate-200">
+                    <h4 class="text-3xl font-black mb-6 text-amber-700 flex items-center gap-3">
+                        <i class="fa-solid fa-earth-americas text-2xl"></i> 海外礦區：能源自主-臺灣的「秘密油庫」！
+                    </h4>
+                    <p class="text-gray-700 leading-relaxed mb-8 text-lg">
+                        你知道嗎？臺灣雖然地圖上看起來很小，但我們的「能源版圖」其實超級大！中油就像是一位厲害的探險家，帶著先進的科技設備，跑到遠遠的非洲和澳洲去「挖寶」。
+                    </p>
+
+                    <div class="space-y-8">
+                        <div>
+                            <h5 class="text-xl font-bold text-slate-800 mb-4 border-l-4 border-amber-500 pl-3">【探險家的兩大基地】</h5>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 ml-4">
+                                <div class="bg-amber-50 p-6 rounded-2xl border border-amber-100">
+                                    <h6 class="font-black text-amber-800 mb-3 text-lg flex items-center gap-2">
+                                        <span>🌍</span> 非洲的查德：我們的自辦農場
+                                    </h6>
+                                    <p class="text-sm text-gray-700 leading-relaxed">
+                                        在非洲的查德，中油花了整整 15 年的時間，在荒涼的大地上不斷嘗試，終於在 <strong>奧瑞（Oryx）礦區</strong> 找到了珍貴的原油。這裡最特別的是，我們不僅僅是出錢，更是擔任「領頭羊」的角色，從探勘、鑽井到產油都由我們主導。第一船原油已經在 2020 年跨越重洋，順利運回臺灣大林煉油廠囉！
+                                    </p>
+                                </div>
+                                
+                                <div class="bg-amber-50 p-6 rounded-2xl border border-amber-100">
+                                    <h6 class="font-black text-amber-800 mb-3 text-lg flex items-center gap-2">
+                                        <span>🌊</span> 廣大的澳洲：深海裡的瓦斯爐
+                                    </h6>
+                                    <p class="text-sm text-gray-700 leading-relaxed">
+                                        澳洲是臺灣最大的「瓦斯（天然氣）」供應地。中油在澳洲參與了多個大型計畫，像是 <strong>依序思（Ichthys）</strong> 和 <strong>普陸（Prelude）</strong>。特別是普陸案，它是使用一艘比航空母艦還要大好幾倍的「浮式生產船」，直接停在海面上把地底下的天然氣吸上來變冷、變小（液化），再運回臺灣，就像是在深海裡放了一個超大型瓦斯爐！
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <div>
+                                <h5 class="text-xl font-bold text-slate-800 mb-3 flex items-center gap-2">
+                                    <span class="text-amber-500">🛡️</span>【為什麼要有自己的礦區？】
+                                </h5>
+                                <p class="text-gray-600 leading-relaxed ml-7">
+                                    這就像是我們在國外擁有自己的「秘密農場」和「加油站」。平時我們雖然會跟別人買菜，但如果我們自己也有種菜，就不用擔心別人漲價或者不賣給我們。
+                                </p>
+                            </div>
+                            <div>
+                                <h5 class="text-xl font-bold text-slate-800 mb-3 flex items-center gap-2">
+                                    <span class="text-amber-500">🛡️</span>【2026 年的守護神】
+                                </h5>
+                                <p class="text-gray-600 leading-relaxed ml-7">
+                                    2026 年在國際局勢下導致油路不穩，或者各國都在搶油，就像超市的牛奶被搶光了。這時候，我們在海外的自有礦區就能發揮威力，把源源不絕的油和氣送回臺灣。這就是我們最穩固的靠山，讓臺灣的車子能繼續跑、家裡的燈能繼續亮、買東西有塑膠袋裝、工廠也能不停工！
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Knowledge Box Warning HTML -->
+                    <div class="p-6 rounded-2xl my-4 border-l-8 shadow-sm transition-all hover:shadow-md bg-orange-50 border-orange-500">
+                        <div class="flex items-center gap-2 mb-2">
+                            <i class="fa-solid fa-circle-info text-orange-600"></i>
+                            <h4 class="font-bold text-lg text-gray-800">【知識小錦囊：什麼是「能源自主」？】</h4>
+                        </div>
+                        <div class="text-gray-700 leading-relaxed text-base">
+                             <p class="text-sm">
+                                簡單來說，就是「自己的油自己挖」。目前臺灣的能源大多數都依賴國外進口，但中油透過在全世界各地找礦區（現在在 8 個國家都有合作呢！），目標就是要把屬於我們自己的油源比例提高，讓臺灣的未來更有安全感。
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 flex justify-end">
+                        <a href="https://share.google/A684muwWve7hQWGNg" target="_blank" rel="noreferrer" class="inline-flex items-center gap-1 text-amber-600 font-bold hover:underline hover:text-amber-800 transition-colors">
+                            Learnmore：台灣中油資訊網：第三接收專網 <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 第二區塊：綠色盾牌 -->
+                <div class="bg-white p-8 md:p-10 rounded-3xl shadow-sm border border-teal-200 border-t-8">
+                    <h4 class="text-3xl font-black mb-6 text-teal-700 flex items-center gap-3">
+                        <i class="fa-solid fa-shield-check text-2xl"></i> 綠色盾牌：氫能轉型與 CCS 神奇封印術
+                    </h4>
+                    <p class="text-gray-700 leading-relaxed mb-8 text-lg">
+                        為了保護地球不變熱，中油現在不只挖石油，還變成了「氣候守護者」！面對未來的能源挑戰，我們有兩件厲害的秘密武器，就像是守護臺灣的技術盾牌：
+                    </p>
+
+                    <div class="space-y-8">
+                        <div>
+                            <h5 class="text-xl font-bold text-slate-800 mb-3 flex items-center gap-2">
+                                <span class="text-teal-500">💧</span>【乾淨的「氫能」：只有水的排氣管】
+                            </h5>
+                            <p class="text-gray-600 leading-relaxed ml-7 mb-2">一般的車子排氣管會冒黑煙，但你想像過有一種燃料，燃燒後排出來的竟然是乾乾淨淨的「水蒸氣」嗎？這就是氫能！</p>
+                            <p class="text-gray-600 leading-relaxed ml-7">
+                                中油正在研發把氫氣變換成能源的方法，甚至在規劃建設氫能加油站。未來，大巴士、大貨車只要加了氫，就能有力氣跑遍全臺灣，而且對環境完全沒有負擔，是真正的「超級乾淨能源」。
+                            </p>
+                        </div>
+
+                        <div>
+                            <h5 class="text-xl font-bold text-slate-800 mb-3 flex items-center gap-2">
+                                <span class="text-teal-500">🕳️</span>【 CCS 碳封存技術：二氧化碳的「地底牢房」】
+                            </h5>
+                            <p class="text-gray-600 leading-relaxed ml-7 mb-4">
+                                在我們努力完全換成綠色能源之前，還是會產生一些二氧化碳。這時候，中油利用專業的鑽井技術，把這些二氧化碳「捕捉」起來，送回深深的地底下。
+                            </p>
+                            <ul class="space-y-3 text-sm text-gray-700 ml-7 bg-teal-50 p-5 rounded-2xl border border-teal-100">
+                                <li><strong class="text-teal-800">怎麼做呢？</strong> 我們會找像地底岩層那樣穩固的空間，把二氧化碳「封印」進去，不讓它們跑到大氣中作怪。</li>
+                                <li><strong class="text-teal-800">為什麼中油能做？</strong> 因為中油最擅長鑽探地層，以前是從地底下把油取出來，現在是把碳「送回地底下住」，這就是 CCS (Carbon Capture and Storage) 技術！</li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <h5 class="text-xl font-bold text-slate-800 mb-3 flex items-center gap-2">
+                                <span class="text-teal-500">✨</span>【 為什麼這很重要？】
+                            </h5>
+                            <p class="text-gray-600 leading-relaxed ml-7">
+                                2026 年是全球減碳的重要關卡。有了氫能這支「長矛」進攻清潔能源，加上 CCS 這面「盾牌」擋住碳排放，中油就能帶著臺灣一步步邁向「淨零排放」。這就像是幫地球蓋了一座隱形的防護罩，讓我們在用電、開車的同時，北極熊也能有冰塊可以住！
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="mt-8">
+                        <!-- Knowledge Box HTML -->
+                        <div class="p-6 rounded-2xl my-4 border-l-8 shadow-sm transition-all hover:shadow-md bg-blue-50 border-blue-500">
+                            <div class="flex items-center gap-2 mb-2">
+                                <i class="fa-solid fa-circle-info text-blue-600"></i>
+                                <h4 class="font-bold text-lg text-gray-800">【💡 知識小錦囊】</h4>
+                            </div>
+                            <div class="text-gray-700 leading-relaxed text-base">
+                                 <ul class="space-y-2 text-sm">
+                                    <li><strong class="text-blue-800">氫能：</strong> 它是宇宙中含量最多的元素，也是未來的「終極能源」。</li>
+                                    <li><strong class="text-blue-800">CCS：</strong> 就像是幫地球做「資源回收」，把廢棄的氣體埋進地底下的保險箱。</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 flex justify-end">
+                        <a href="https://www.tccsua.org/knowledge1.html" target="_blank" rel="noreferrer" class="inline-flex items-center gap-1 text-teal-600 font-bold hover:underline hover:text-teal-800 transition-colors">
+                            Learnmore：臺灣碳捕存再利用協會：CSS介紹 <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- TAB CONTENT: FUTURE (未來)                     -->
+        <!-- ============================================== -->
+        <div id="tab-future" class="tab-content hidden fade-in slide-in-from-bottom">
+             <div class="flex items-center gap-3 mb-8">
+                <i class="fa-solid fa-leaf text-green-600 text-3xl"></i>
+                <h3 class="text-3xl font-bold">第四展區：永續和平未來</h3>
+            </div>
+
+            <div class="space-y-12">
+                
+                <!-- 第一區塊：地熱島嶼 -->
+                <div class="bg-white p-8 md:p-10 rounded-3xl shadow-sm border border-red-200 border-t-8">
+                    <h4 class="text-3xl font-black mb-6 text-red-600 flex items-center gap-3">
+                        <i class="fa-solid fa-temperature-half text-2xl"></i> 地熱島嶼：來自地底下的「本土守護力」
+                    </h4>
+                    <p class="text-gray-700 leading-relaxed mb-8 text-lg">
+                        你知道臺灣這座小島其實「熱血沸騰」嗎？中油發揮了平時鑽井找油的厲害本領，現在改去地底下找「熱水」囉！
+                    </p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                        <div class="bg-red-50 p-6 rounded-2xl border border-red-100">
+                            <h5 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
+                                <span class="text-red-500">⏱️</span> 24 小時不打烊的電力
+                            </h5>
+                            <p class="text-gray-600 text-sm leading-relaxed">
+                                太陽公公下山了就沒有太陽能，沒風的時候風車就不會轉。但地熱發電很不一樣，地底下的熱氣 24 小時都在，就像一個永遠不會冷卻的「超級大熱水瓶」，不管白天黑夜，都能穩定送出電力。
+                            </p>
+                        </div>
+                        <div class="bg-red-50 p-6 rounded-2xl border border-red-100">
+                            <h5 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
+                                <span class="text-red-500">🛡️</span> 不怕封鎖的能量
+                            </h5>
+                            <p class="text-gray-600 text-sm leading-relaxed">
+                                最大的優點是，地熱就在我們腳底下的宜蘭等地。就算 2026 年國際航道不穩，誰也沒辦法切斷來自地心的能量！這就是臺灣最珍貴、最穩定的「本土綠色電力」。
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Knowledge Box Warning HTML -->
+                    <div class="p-6 rounded-2xl my-4 border-l-8 shadow-sm transition-all hover:shadow-md bg-orange-50 border-orange-500">
+                        <div class="flex items-center gap-2 mb-2">
+                            <i class="fa-solid fa-circle-info text-orange-600"></i>
+                            <h4 class="font-bold text-lg text-gray-800">【石油探索館知識小錦囊】</h4>
+                        </div>
+                        <div class="text-gray-700 leading-relaxed text-base">
+                            <p class="text-sm">
+                                中油利用專業的「鑽井技術」鑽入地底幾千公尺，把高溫蒸汽引導上來轉動發電機，發完電的水還會再送回地底下，是非常環保的循環喔！
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 第二區塊：智慧加油站 -->
+                <div class="bg-white p-8 md:p-10 rounded-3xl shadow-sm border border-blue-200 border-t-8">
+                    <h4 class="text-3xl font-black mb-6 text-blue-700 flex items-center gap-3">
+                        <i class="fa-solid fa-bolt text-2xl"></i> 未來的「智慧加油站」：能量百寶箱
+                    </h4>
+                    <p class="text-gray-700 leading-relaxed mb-8 text-lg">
+                        你以為加油站只能加汽油嗎？未來的加油站會變得很不一樣，它就像是一個穿著科技盔甲的「全能能量補給站」！
+                    </p>
+
+                    <div class="space-y-6 mb-8">
+                        <ul class="space-y-4">
+                            <li class="flex items-start gap-4 bg-blue-50 p-5 rounded-2xl border border-blue-100">
+                                <div class="mt-1 text-blue-500 bg-white p-2 rounded-lg shadow-sm w-10 h-10 flex items-center justify-center"><i class="fa-solid fa-bolt"></i></div>
+                                <div>
+                                    <strong class="text-blue-800 text-lg block mb-1">屋頂會發電：</strong>
+                                    <span class="text-gray-600 text-sm">站點的屋頂鋪滿了太陽能板，自己發電給自己用。</span>
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-4 bg-blue-50 p-5 rounded-2xl border border-blue-100">
+                                <div class="mt-1 text-blue-500 bg-white p-2 rounded-lg shadow-sm w-10 h-10 flex items-center justify-center"><i class="fa-solid fa-droplet"></i></div>
+                                <div>
+                                    <strong class="text-blue-800 text-lg block mb-1">氫能補給站：</strong>
+                                    <span class="text-gray-600 text-sm">就像我們前面提到的，這裡會有專門給氫能車使用的補給設備，排出來的只有純淨的水蒸氣。</span>
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-4 bg-blue-50 p-5 rounded-2xl border border-blue-100">
+                                <div class="mt-1 text-blue-500 bg-white p-2 rounded-lg shadow-sm w-10 h-10 flex items-center justify-center"><i class="fa-solid fa-shield-check"></i></div>
+                                <div>
+                                    <strong class="text-blue-800 text-lg block mb-1">巨大的能量存錢筒（大型儲能櫃）：</strong>
+                                    <span class="text-gray-600 text-sm">加油站裡還躲著超級大的「大電池」，在電力充足時把電存起來，當大家需要用電或大停電時，它就能立刻變身成救援投手，把電力送出去。</span>
+                                </div>
+                            </li>
+                        </ul>
+
+                        <div class="mt-8 ml-4">
+                            <h5 class="font-bold text-slate-800 mb-3 border-l-4 border-blue-500 pl-3 text-lg">【 為什麼中油要這樣做？】</h5>
+                            <p class="text-gray-600 text-sm leading-relaxed ml-4">
+                                這就是中油的「優油、減碳、潔能」大計畫！透過這些智慧站點，中油從賣油的商店變成了守護環境的綠能基地，讓我們在 2026 年之後的未來，生活更乾淨、更安全。
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-end">
+                        <a href="https://share.google/Amk3Qf6UouyXl5nal" target="_blank" rel="noreferrer" class="inline-flex items-center gap-1 text-blue-600 font-bold hover:underline hover:text-blue-800 transition-colors">
+                            Learnmore：台灣中油全球資訊網：中油地熱發電技術 <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 第三區塊：公民行動指南 -->
+                <div class="bg-white rounded-3xl shadow-xl overflow-hidden border border-green-200">
+                    <div class="bg-green-600 px-8 py-6 text-white font-bold text-2xl flex items-center gap-3">
+                        <i class="fa-solid fa-circle-check text-2xl"></i> 公民行動指南：守護臺灣，我可以怎麼做？
+                    </div>
+                    <div class="p-8 md:p-10">
+                        <p class="text-gray-700 leading-relaxed mb-8 text-lg">
+                            守護臺灣的能源安全，不只是中油的工作，每個人都是不可或缺的「能源守護者」！透過這些簡單的小動作，你就能幫臺灣蓋起最強的防護罩：
+                        </p>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                            <!-- 卡片 1 -->
+                            <div class="bg-green-50 p-6 rounded-2xl border border-green-100 flex flex-col h-full hover:shadow-md transition">
+                                <h5 class="font-bold text-lg mb-4 text-green-800 border-b-2 border-green-200 pb-3 flex items-center gap-2">
+                                    <span>📦</span> 1. 節能減碳
+                                </h5>
+                                <div class="text-sm text-gray-600 mb-6 flex-1 space-y-3">
+                                    <p class="font-bold text-green-700">守護珍貴的「石油腦」</p>
+                                    <p>你知道嗎?你手中的每一個塑膠袋、保鮮膜、飲料杯，都是用珍貴的石油變出來的!</p>
+                                    <p><strong class="text-green-700">戰略物資不浪費：</strong> 在 2026 年這種能源緊張的時刻，石油應該優先留給救護車和發電廠。</p>
+                                </div>
+                                <div class="bg-white p-4 rounded-xl text-sm border border-green-100 shadow-sm mt-auto">
+                                    <span class="font-black text-green-600 block mb-1">💪 我的行動：</span> 
+                                    出門自備購物袋、減少使用一次性餐具。每減少一個塑膠袋，就是幫國家節省一份戰略物資！ 讓我們從源頭減量，把石油腦留給更有需要的地方。
+                                </div>
+                            </div>
+
+                            <!-- 卡片 2 -->
+                            <div class="bg-green-50 p-6 rounded-2xl border border-green-100 flex flex-col h-full hover:shadow-md transition">
+                                <h5 class="font-bold text-lg mb-4 text-green-800 border-b-2 border-green-200 pb-3 flex items-center gap-2">
+                                    <span>🚴</span> 2. 智慧交通
+                                </h5>
+                                <div class="text-sm text-gray-600 mb-6 flex-1 space-y-3">
+                                    <p class="font-bold text-green-700">減輕國家的能量負擔</p>
+                                    <p>出門時，如果大家各開一台車，會消耗非常多的汽油。</p>
+                                    <p><strong class="text-green-700">能量共享：</strong> 選擇搭乘捷運、公車或騎腳踏車，就像是大家一起「分擔」能量的使用。</p>
+                                </div>
+                                <div class="bg-white p-4 rounded-xl text-sm border border-green-100 shadow-sm mt-auto">
+                                    <span class="font-black text-green-600 block mb-1">💪 我的行動：</span> 
+                                    多利用大眾運輸工具。這不僅能讓空氣變清新，更是支持國家能源防衛的具體表現。當我們節省下的汽油越多，臺灣的「救命存錢筒」就能撐得越久！
+                                </div>
+                            </div>
+
+                            <!-- 卡片 3 -->
+                            <div class="bg-green-50 p-6 rounded-2xl border border-green-100 flex flex-col h-full hover:shadow-md transition">
+                                <h5 class="font-bold text-lg mb-4 text-green-800 border-b-2 border-green-200 pb-3 flex items-center gap-2">
+                                    <span>🔌</span> 3. 節約用電
+                                </h5>
+                                <div class="text-sm text-gray-600 mb-6 flex-1 space-y-3">
+                                    <p class="font-bold text-green-700">幫發電廠「減壓」</p>
+                                    <p>臺灣的電力有很多是靠天然氣（LNG）發出來的。</p>
+                                    <p><strong class="text-green-700">隨手關燈：</strong> 每當你隨手關掉不用的電燈或冷氣，就是在幫忙省下珍貴的天然氣。</p>
+                                </div>
+                                <div class="bg-white p-4 rounded-xl text-sm border border-green-100 shadow-sm mt-auto">
+                                    <span class="font-black text-green-600 block mb-1">💪 我的行動：</span> 
+                                    養成隨手關電源的好習慣。省下的每一度電，都是在幫臺灣累積應對挑戰的「韌性」喔！
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-gradient-to-r from-yellow-50 to-orange-50 border-l-4 border-yellow-400 p-6 rounded-r-2xl shadow-sm">
+                            <p class="text-orange-900 font-bold text-center text-lg">
+                                中油在全世界奔波找油，就是為了讓我們生活無憂。<br class="hidden md:block" />
+                                而我們在臺灣小小的節約動作，就像是幫前方打仗的勇士送上最好的補給。<br class="hidden md:block" />
+                                <span class="text-red-600">讓我們一起成為守護臺灣能量的小英雄吧！</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- TAB CONTENT: GAME (遊戲)                       -->
+        <!-- ============================================== -->
+        <div id="tab-game" class="tab-content hidden fade-in">
+            <div class="bg-white p-4 md:p-6 rounded-3xl shadow-sm border border-slate-200">
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-5">
+                    <div>
+                        <h3 class="text-2xl font-bold text-slate-800 flex items-center gap-2">
+                            <i class="fa-solid fa-gamepad text-blue-600"></i>
+                            能源戰略遊戲
+                        </h3>
+                    </div>
+                    <a href="https://u11317006-source.github.io/0516_energy_game04/" target="_blank" rel="noreferrer" class="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl bg-blue-600 text-white font-bold hover:bg-blue-700 transition-colors">
+                        另開遊戲 <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                    </a>
+                </div>
+                <div class="w-full aspect-[16/10] min-h-[520px] overflow-hidden rounded-2xl border border-slate-200 bg-slate-100">
+                    <iframe
+                        src="https://u11317006-source.github.io/0516_energy_game04/"
+                        title="能源戰略遊戲"
+                        class="w-full h-full"
+                        loading="lazy"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="mt-24 border-t border-slate-200 py-12 px-4 bg-white">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8 text-center md:text-left">
+            <div class="flex items-center gap-2">
+                <div class="bg-slate-900 text-white p-2 rounded-lg font-bold text-xs tracking-tighter">ENERGY SHIELD</div>
+                <span class="text-slate-500 font-bold">中油石油探索館 數位學習專案</span>
+            </div>
+            <div class="text-slate-400 text-[10px]">
+                此網頁為教學設計展示，所有數據以2026年4月底最新之數據為背景。
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Tab Switching Logic
+        function switchTab(tabId) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.add('hidden');
+                tab.classList.remove('block');
+            });
+            
+            // Show selected tab
+            const selectedTab = document.getElementById('tab-' + tabId);
+            if(selectedTab) {
+                selectedTab.classList.remove('hidden');
+                selectedTab.classList.add('block');
+            }
+
+            // Update Desktop Nav styles
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                if (btn.dataset.target === tabId) {
+                    btn.classList.add('text-yellow-400', 'border-b-2', 'border-yellow-400');
+                } else {
+                    btn.classList.remove('text-yellow-400', 'border-b-2', 'border-yellow-400');
+                }
+            });
+
+            // Update Mobile Nav styles
+            document.querySelectorAll('.mobile-nav-btn').forEach(btn => {
+                if (btn.dataset.target === tabId) {
+                    btn.classList.add('text-yellow-400', 'font-bold');
+                } else {
+                    btn.classList.remove('text-yellow-400', 'font-bold');
+                }
+            });
+
+            // Scroll to top smoothly
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function toggleFontPanel() {
+            const panel = document.getElementById('font-size-panel');
+            const button = document.getElementById('font-toggle-btn');
+            const isOpening = panel.classList.contains('hidden');
+
+            panel.classList.toggle('hidden', !isOpening);
+            panel.classList.toggle('flex', isOpening);
+            button.setAttribute('aria-expanded', String(isOpening));
+        }
+
+        // Font Size Logic
+        function changeFontSize(size, btnElement) {
+            const root = document.documentElement;
+            
+            if (size === 'large') {
+                root.style.fontSize = '22px';
+            } else if (size === 'small') {
+                root.style.fontSize = '16px';
+            } else {
+                root.style.fontSize = '18px';
+            }
+
+            // Update button styles
+            document.querySelectorAll('.font-btn').forEach(btn => {
+                btn.classList.remove('bg-blue-600', 'text-white', 'shadow-md');
+                btn.classList.add('hover:bg-slate-100', 'text-slate-700');
+            });
+
+            btnElement.classList.add('bg-blue-600', 'text-white', 'shadow-md');
+            btnElement.classList.remove('hover:bg-slate-100', 'text-slate-700');
+        }
+
+        // Oil Price Slider Logic
+        function updateOilPrice(value) {
+            const basePrice = 80;
+            const ratio = value / basePrice;
+            
+            document.getElementById('oil-price-display').innerText = '$' + value;
+            document.getElementById('price-bread').innerText = '$' + Math.round(35 * ratio);
+            document.getElementById('price-delivery').innerText = '$' + Math.round(40 * ratio);
+            document.getElementById('price-elec').innerText = '$' + Math.round(600 * ratio);
+        }
+
+        // Distillation Lab Logic
+        const distillStages = [
+            { id: 'lpg', name: '液化石油氣', temp: '20℃', desc: '煮飯洗澡用的瓦斯。' },
+            { id: 'gas', name: '汽油/石油腦', temp: '70-120℃', desc: '汽車動力與塑膠袋原料。' },
+            { id: 'jet', name: '航空燃油', temp: '170℃', desc: '戰機與飛機的核心動力。' },
+            { id: 'die', name: '柴油', temp: '270℃', desc: '重型機具與貨車燃料。' },
+            { id: 'lub', name: '潤滑油', temp: '400℃', desc: '機器運轉的護髮乳。' },
+            { id: 'asp', name: '瀝青', temp: '500℃+', desc: '鋪路用的柏油路面。' }
+        ];
+
+        let currentDistillStage = null;
+
+        function renderDistillButtons() {
+            const container = document.getElementById('distill-buttons');
+            container.innerHTML = '';
+            
+            distillStages.forEach((item, index) => {
+                const isActive = currentDistillStage && currentDistillStage.id === item.id;
+                const btnClass = isActive 
+                    ? 'border-purple-600 bg-purple-50 scale-105' 
+                    : 'border-slate-100 bg-slate-50';
+                
+                const btn = document.createElement('button');
+                btn.className = `p-3 rounded-xl text-left border-2 transition-all ${btnClass}`;
+                btn.onclick = () => setDistillStage(item, index);
+                btn.innerHTML = `
+                    <div class="text-xs font-bold">${item.name}</div>
+                    <div class="text-[10px] text-purple-600 font-mono">${item.temp}</div>
+                `;
+                container.appendChild(btn);
+            });
+        }
+
+        function setDistillStage(item, index) {
+            currentDistillStage = item;
+            renderDistillButtons();
+
+            // Update Liquid Level
+            const liquid = document.getElementById('distill-liquid');
+            const heightPercentage = 100 - (index * 15);
+            liquid.style.height = heightPercentage + '%';
+
+            // Update Info text
+            const infoContainer = document.getElementById('distill-info');
+            infoContainer.innerHTML = `
+                <div class="fade-in">
+                    <div class="text-purple-700 font-black text-sm">${item.name}</div>
+                    <div class="text-[10px] text-slate-500">${item.desc}</div>
+                </div>
+            `;
+            infoContainer.classList.remove('text-[10px]', 'text-slate-400');
+        }
+
+        // Initialize Distill Buttons
+        renderDistillButtons();
+
+        // Initialize first tab explicitly
+        switchTab('home');
+
+    </script>
+</body>
+</html>
