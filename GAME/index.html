@@ -206,6 +206,22 @@
         }
         #custom-alert-title { font-size: 30px; font-weight: bold; color: #f9ca24; margin-bottom: 20px; border-bottom: 2px solid #555; padding-bottom: 10px; }
         #custom-alert-message { font-size: 22px; line-height: 1.6; color: #fff; margin-bottom: 30px; text-align: left; }
+        #loading-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(10, 15, 35, 0.96); z-index: 10001; display: none;
+            flex-direction: column; justify-content: center; align-items: center;
+            text-align: center; color: #fff; box-sizing: border-box; padding: 30px;
+        }
+        #loading-title { color: #00ffff; font-size: 30px; font-weight: bold; margin-bottom: 16px; }
+        #loading-text { color: #f9ca24; font-size: 20px; margin-bottom: 18px; }
+        #loading-bar {
+            width: 70%; max-width: 520px; height: 18px; border: 2px solid #4a90e2;
+            border-radius: 999px; overflow: hidden; background: rgba(255,255,255,0.08);
+        }
+        #loading-bar-fill {
+            width: 0%; height: 100%; background: linear-gradient(90deg, #00d2d3, #e94560);
+            transition: width 0.2s ease;
+        }
         #custom-alert-btn { padding: 12px 50px; font-size: 22px; background: #00ffff; color: #1a1a2e; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; }
 
         /* 手機/平板方向控制面板 - 預設位置，後續透過 JS 依裝置調整 */
@@ -261,6 +277,12 @@
             <div id="custom-alert-message"></div>
             <button id="custom-alert-btn">確定</button>
         </div>
+    </div>
+
+    <div id="loading-overlay">
+        <div id="loading-title">載入遊戲資源中</div>
+        <div id="loading-text">0%</div>
+        <div id="loading-bar"><div id="loading-bar-fill"></div></div>
     </div>
 
     <div id="news-ticker">
@@ -353,6 +375,85 @@
 // --- 👇👇👇 劇情播放系統 👇👇👇 ---
     let currentStoryImages = [];
     let currentStoryIndex = 0;
+    const preloadedImages = new Map();
+    let assetsReady = false;
+    let isPreloading = false;
+
+    function buildImagePaths(folderName, imageCount) {
+        const paths = [];
+        for (let i = 1; i <= imageCount; i++) {
+            paths.push(`${folderName}/${folderName}_${i}.png`);
+        }
+        return paths;
+    }
+
+    function getAllAssetPaths() {
+        return [
+            ...buildImagePaths('start_male', 13),
+            ...buildImagePaths('start_female', 13),
+            ...buildImagePaths('ending_male_success', 8),
+            ...buildImagePaths('ending_female_success', 8),
+            ...buildImagePaths('ending_male_fail_days', 5),
+            ...buildImagePaths('ending_female_fail_days', 5),
+            ...buildImagePaths('ending_male_fail_boat', 5),
+            ...buildImagePaths('ending_female_fail_boat', 5)
+        ];
+    }
+
+    function updateLoadingProgress(loaded, total) {
+        const percent = total === 0 ? 100 : Math.round((loaded / total) * 100);
+        const text = document.getElementById('loading-text');
+        const fill = document.getElementById('loading-bar-fill');
+        if (text) text.innerText = `${percent}%`;
+        if (fill) fill.style.width = `${percent}%`;
+    }
+
+    function preloadImage(path) {
+        return new Promise(resolve => {
+            if (preloadedImages.has(path)) {
+                resolve(preloadedImages.get(path));
+                return;
+            }
+
+            const img = new Image();
+            img.onload = () => {
+                preloadedImages.set(path, img);
+                resolve(img);
+            };
+            img.onerror = () => {
+                console.warn('Image preload failed:', path);
+                preloadedImages.set(path, img);
+                resolve(img);
+            };
+            img.src = path;
+        });
+    }
+
+    async function preloadGameAssets() {
+        if (assetsReady) return;
+        if (isPreloading) return;
+
+        isPreloading = true;
+        const overlay = document.getElementById('loading-overlay');
+        const paths = getAllAssetPaths();
+        let loaded = 0;
+
+        if (overlay) overlay.style.display = 'flex';
+        updateLoadingProgress(0, paths.length);
+
+        await Promise.all(paths.map(async path => {
+            await preloadImage(path);
+            loaded++;
+            updateLoadingProgress(loaded, paths.length);
+        }));
+
+        const bgm = document.getElementById('bgm');
+        if (bgm) bgm.load();
+
+        assetsReady = true;
+        isPreloading = false;
+        if (overlay) overlay.style.display = 'none';
+    }
     
     function playStory(folderName, imageCount, onCompleteCallback) {
         currentStoryImages = [];
@@ -360,8 +461,9 @@
 
         // 預載入該資料夾內的所有圖片 (假設檔名規則皆為: 資料夾名稱_1.png)
         for(let i = 1; i <= imageCount; i++) {
-            let img = new Image();
-            img.src = `${folderName}/${folderName}_${i}.png`;
+            let path = `${folderName}/${folderName}_${i}.png`;
+            let img = preloadedImages.get(path) || new Image();
+            if (!preloadedImages.has(path)) img.src = path;
             currentStoryImages.push(img);
         }
 
@@ -666,14 +768,16 @@
         }, 3000); 
     }
 
-    function startGame() {
+    async function startGame() {
         if (!selectedGender) {
             showCustomAlert("提示", "請先選擇船長性別喔！");
             return;
         }
+        if (isPreloading) return;
 
         // 隱藏開始畫面
         document.getElementById('start-screen').style.display = 'none';
+        await preloadGameAssets();
         
         // 先播放背景音樂，讓看劇情時就有音樂沉浸感
         let bgm = document.getElementById('bgm');
