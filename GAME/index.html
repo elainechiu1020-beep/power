@@ -260,7 +260,7 @@
 </head>
 <body>
 
-<audio id="bgm" src="bgm.m4a" loop preload="auto"></audio>
+<audio id="bgm" src="bgm.m4a" loop preload="auto" autoplay></audio>
 
 <div id="main-container">
     
@@ -376,13 +376,15 @@
     let currentStoryImages = [];
     let currentStoryIndex = 0;
     const preloadedImages = new Map();
+    const preloadPromises = new Map();
+    let preloadAllPromise = null;
     let assetsReady = false;
     let isPreloading = false;
 
     function buildImagePaths(folderName, imageCount) {
         const paths = [];
         for (let i = 1; i <= imageCount; i++) {
-            paths.push(`${folderName}/${folderName}_${i}.png`);
+            paths.push(`${folderName}/${folderName}_${i}.webp`);
         }
         return paths;
     }
@@ -409,36 +411,34 @@
     }
 
     function preloadImage(path) {
-        return new Promise(resolve => {
-            if (preloadedImages.has(path)) {
-                resolve(preloadedImages.get(path));
-                return;
-            }
+        if (preloadedImages.has(path)) return Promise.resolve(preloadedImages.get(path));
+        if (preloadPromises.has(path)) return preloadPromises.get(path);
 
-            const img = new Image();
+        const img = new Image();
+        img.decoding = 'async';
+        const promise = new Promise(resolve => {
             img.onload = () => {
                 preloadedImages.set(path, img);
+                preloadPromises.delete(path);
                 resolve(img);
             };
             img.onerror = () => {
                 console.warn('Image preload failed:', path);
                 preloadedImages.set(path, img);
+                preloadPromises.delete(path);
                 resolve(img);
             };
-            img.src = path;
         });
+        preloadPromises.set(path, promise);
+        img.src = path;
+        return promise;
     }
 
-    async function preloadGameAssets() {
-        if (assetsReady) return;
-        if (isPreloading) return;
-
-        isPreloading = true;
-        const overlay = document.getElementById('loading-overlay');
-        const paths = getAllAssetPaths();
+    async function preloadPaths(paths, showOverlay = false) {
         let loaded = 0;
+        const overlay = document.getElementById('loading-overlay');
 
-        if (overlay) overlay.style.display = 'flex';
+        if (showOverlay && overlay) overlay.style.display = 'flex';
         updateLoadingProgress(0, paths.length);
 
         await Promise.all(paths.map(async path => {
@@ -447,21 +447,44 @@
             updateLoadingProgress(loaded, paths.length);
         }));
 
-        const bgm = document.getElementById('bgm');
-        if (bgm) bgm.load();
-
-        assetsReady = true;
-        isPreloading = false;
-        if (overlay) overlay.style.display = 'none';
+        if (showOverlay && overlay) overlay.style.display = 'none';
     }
+
+    async function preloadStoryAssets(folderName, imageCount) {
+        if (isPreloading) return;
+        isPreloading = true;
+        await preloadPaths(buildImagePaths(folderName, imageCount), true);
+        isPreloading = false;
+    }
+
+    function preloadGameAssets() {
+        if (assetsReady) return Promise.resolve();
+        if (preloadAllPromise) return preloadAllPromise;
+
+        preloadAllPromise = preloadPaths(getAllAssetPaths(), false).then(() => {
+            assetsReady = true;
+        });
+        return preloadAllPromise;
+    }
+
+    function startBgm() {
+        const bgm = document.getElementById('bgm');
+        if (!bgm) return;
+        bgm.volume = 0.5;
+        bgm.play().catch(e => console.log("背景音樂播放失敗", e));
+    }
+
+    window.addEventListener('load', startBgm);
+    window.addEventListener('pointerdown', startBgm, { once: true });
+    window.addEventListener('keydown', startBgm, { once: true });
     
     function playStory(folderName, imageCount, onCompleteCallback) {
         currentStoryImages = [];
         currentStoryIndex = 0;
 
-        // 預載入該資料夾內的所有圖片 (假設檔名規則皆為: 資料夾名稱_1.png)
+        // 預載入該資料夾內的所有圖片 (假設檔名規則皆為: 資料夾名稱_1.webp)
         for(let i = 1; i <= imageCount; i++) {
-            let path = `${folderName}/${folderName}_${i}.png`;
+            let path = `${folderName}/${folderName}_${i}.webp`;
             let img = preloadedImages.get(path) || new Image();
             if (!preloadedImages.has(path)) img.src = path;
             currentStoryImages.push(img);
@@ -613,6 +636,7 @@
     ];
 
     function selectDevice(deviceType) {
+        startBgm();
         const mobileControls = document.getElementById('mobile-controls');
         if (deviceType === 'desktop') {
             isMobileMode = false;
@@ -777,7 +801,8 @@
 
         // 隱藏開始畫面
         document.getElementById('start-screen').style.display = 'none';
-        await preloadGameAssets();
+        await preloadStoryAssets((selectedGender === 'M' ? 'start_male' : 'start_female'), 13);
+        preloadGameAssets();
         
         // 先播放背景音樂，讓看劇情時就有音樂沉浸感
         let bgm = document.getElementById('bgm');
