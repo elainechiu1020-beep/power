@@ -157,33 +157,37 @@
             flex-direction: column; justify-content: center; align-items: center; text-align: center; box-sizing: border-box; padding: 20px;
             transition: background-color 0.3s;
         }
-        #start-screen h1 { color: #e94560; font-size: 32px; margin-bottom: 10px;}
+        #start-screen h1 { color: #e94560; font-size: 32px; margin-bottom: 5px;}
         
         .rule-container {
-            text-align: left; background: rgba(255,255,255,0.1); padding: 20px; 
+            text-align: left; background: rgba(255,255,255,0.1); padding: 15px; 
             border-radius: 12px; border: 1px solid #4a90e2; width: 85%; max-width: 750px;
-            display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;
+            display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;
         }
-        .rule-item { margin-bottom: 12px; line-height: 1.4; }
+        .rule-item { margin-bottom: 10px; line-height: 1.4; }
         .rule-item strong { color: #f9ca24; font-size: 18px; }
         .visual-hint { background: rgba(0,0,0,0.3); padding: 10px; border-radius: 8px; border: 1px dashed #555; }
         .visual-hint div { margin-bottom: 8px; display: flex; align-items: center; gap: 10px; font-size: 17px;}
         .emoji-big { font-size: 30px; }
 
-        .gender-options { display: flex; gap: 20px; margin-bottom: 20px; justify-content: center; }
-        .gender-btn {
-            font-size: 20px; background: rgba(0,0,0,0.5); border: 2px solid #555; border-radius: 10px;
-            padding: 12px 25px; cursor: pointer; transition: 0.3s; color: #fff; font-weight: bold; display: flex; align-items: center; gap: 10px;
+        .options-row { display: flex; gap: 30px; margin-bottom: 15px; justify-content: center; align-items: flex-end; }
+        .option-group { display: flex; flex-direction: column; align-items: center; }
+        .option-title { color: #4a90e2; font-weight: bold; margin-bottom: 8px; font-size: 18px; }
+        
+        .gender-options, .difficulty-options { display: flex; gap: 10px; }
+        .gender-btn, .difficulty-btn {
+            font-size: 18px; background: rgba(0,0,0,0.5); border: 2px solid #555; border-radius: 10px;
+            padding: 8px 15px; cursor: pointer; transition: 0.3s; color: #fff; font-weight: bold; display: flex; align-items: center; gap: 5px;
         }
-        .gender-btn.selected { border-color: #00d2d3; background: rgba(0, 210, 211, 0.2); box-shadow: 0 0 15px #00d2d3; }
+        .gender-btn.selected, .difficulty-btn.selected { border-color: #00d2d3; background: rgba(0, 210, 211, 0.2); box-shadow: 0 0 15px #00d2d3; }
 
         #start-btn {
-            padding: 15px 50px; font-size: 22px; background: #e94560; color: white; border: none; border-radius: 8px;
+            padding: 12px 40px; font-size: 22px; background: #e94560; color: white; border: none; border-radius: 8px;
             cursor: pointer; font-weight: bold; box-shadow: 0 4px 10px rgba(233, 69, 96, 0.5);
         }
         
         .control-hint {
-            color: #00d2d3; font-weight: bold; margin-bottom: 15px; font-size: 18px;
+            color: #00d2d3; font-weight: bold; margin-bottom: 10px; font-size: 18px;
             background: rgba(0, 210, 211, 0.1); padding: 8px 20px; border-radius: 8px; border: 1px dashed #00d2d3;
         }
 
@@ -206,22 +210,6 @@
         }
         #custom-alert-title { font-size: 30px; font-weight: bold; color: #f9ca24; margin-bottom: 20px; border-bottom: 2px solid #555; padding-bottom: 10px; }
         #custom-alert-message { font-size: 22px; line-height: 1.6; color: #fff; margin-bottom: 30px; text-align: left; }
-        #loading-overlay {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(10, 15, 35, 0.96); z-index: 10001; display: none;
-            flex-direction: column; justify-content: center; align-items: center;
-            text-align: center; color: #fff; box-sizing: border-box; padding: 30px;
-        }
-        #loading-title { color: #00ffff; font-size: 30px; font-weight: bold; margin-bottom: 16px; }
-        #loading-text { color: #f9ca24; font-size: 20px; margin-bottom: 18px; }
-        #loading-bar {
-            width: 70%; max-width: 520px; height: 18px; border: 2px solid #4a90e2;
-            border-radius: 999px; overflow: hidden; background: rgba(255,255,255,0.08);
-        }
-        #loading-bar-fill {
-            width: 0%; height: 100%; background: linear-gradient(90deg, #00d2d3, #e94560);
-            transition: width 0.2s ease;
-        }
         #custom-alert-btn { padding: 12px 50px; font-size: 22px; background: #00ffff; color: #1a1a2e; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; }
 
         /* 手機/平板方向控制面板 - 預設位置，後續透過 JS 依裝置調整 */
@@ -260,7 +248,7 @@
 </head>
 <body>
 
-<audio id="bgm" src="bgm.m4a" loop preload="auto" autoplay></audio>
+<audio id="bgm" src="bgm.mp3" loop preload="auto"></audio>
 
 <div id="main-container">
     
@@ -279,14 +267,8 @@
         </div>
     </div>
 
-    <div id="loading-overlay">
-        <div id="loading-title">載入遊戲資源中</div>
-        <div id="loading-text">0%</div>
-        <div id="loading-bar"><div id="loading-bar-fill"></div></div>
-    </div>
-
     <div id="news-ticker">
-        <span id="ticker-text">戰情快報：2026年5月，美伊衝突爆發，荷姆茲海峽面臨封鎖風險... ｜ 戰情快報：能源生命線受威脅，中油船隊緊急出發！</span>
+        <span id="ticker-text"><span style="color: yellow;">模擬情境</span> 戰情快報：2026年5月，美伊衝突爆發，荷姆茲海峽面臨封鎖風險... ｜ <span style="color: yellow;">模擬情境</span> 戰情快報：能源生命線受威脅，中油船隊緊急出發！</span>
     </div>
 
     <div id="game-wrapper">
@@ -310,9 +292,23 @@
                 </div>
             </div>
 
-            <div class="gender-options">
-                <div class="gender-btn" id="gender-M" onclick="selectGender('M')">👨‍✈️ 男船長</div>
-                <div class="gender-btn" id="gender-F" onclick="selectGender('F')">👩‍✈️ 女船長</div>
+            <div class="options-row">
+                <div class="option-group">
+                    <div class="option-title">1. 選擇難度</div>
+                    <div class="difficulty-options">
+                        <div class="difficulty-btn" id="diff-easy" onclick="selectDifficulty('easy')">🐢 簡單</div>
+                        <div class="difficulty-btn selected" id="diff-normal" onclick="selectDifficulty('normal')">⚡ 中等</div>
+                        <div class="difficulty-btn" id="diff-hard" onclick="selectDifficulty('hard')">🔥 困難</div>
+                    </div>
+                </div>
+                
+                <div class="option-group">
+                    <div class="option-title">2. 選擇船長</div>
+                    <div class="gender-options">
+                        <div class="gender-btn" id="gender-M" onclick="selectGender('M')">👨‍✈️ 男船長</div>
+                        <div class="gender-btn" id="gender-F" onclick="selectGender('F')">👩‍✈️ 女船長</div>
+                    </div>
+                </div>
             </div>
 
             <button id="start-btn" onclick="startGame()">登船出發，保衛生命線！</button>
@@ -345,25 +341,6 @@
     </div>
 </div>
 
-<div id="dialog-overlay">
-            <div id="dialog-box">
-                <div id="speaker-info">
-                    <div id="speaker-icon">👩‍✈️</div>
-                    <div id="speaker-name">船長</div>
-                </div>
-                <div id="dialog-text"></div>
-                <div id="dialog-options" class="btn-container"></div>
-            </div>
-        </div>
-
-        <div id="story-overlay" style="display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 9999; cursor: pointer; flex-direction: column; justify-content: center; align-items: center;">
-            <img id="story-image" src="" style="max-width: 100%; max-height: 100%; object-fit: contain; pointer-events: none;">
-            <div style="position: absolute; bottom: 20px; right: 20px; color: #fff; font-size: 20px; font-weight: bold; animation: blink 1s infinite; background: rgba(0,0,0,0.5); padding: 5px 15px; border-radius: 10px;">點擊畫面繼續 ▼</div>
-            
-            <button id="skip-story-btn" onmouseover="this.style.background='rgba(233, 69, 96, 0.8)'" onmouseout="this.style.background='rgba(0,0,0,0.7)'" style="position: absolute; top: 20px; right: 20px; padding: 10px 20px; font-size: 18px; font-weight: bold; background: rgba(0,0,0,0.7); color: #fff; border: 2px solid #fff; border-radius: 8px; cursor: pointer; z-index: 10000; transition: background 0.3s;">⏭️ 跳過劇情</button>
-        </div>
-        </div>
-
 <div id="mobile-controls">
     <div class="d-btn" id="btn-up">⬆️</div>
     <div class="d-btn" id="btn-left">⬅️</div>
@@ -372,159 +349,7 @@
 </div>
 
 <script>
-// --- 👇👇👇 劇情播放系統 👇👇👇 ---
-    let currentStoryImages = [];
-    let currentStoryIndex = 0;
-    const preloadedImages = new Map();
-    const preloadPromises = new Map();
-    let preloadAllPromise = null;
-    let assetsReady = false;
-    let isPreloading = false;
-
-    function buildImagePaths(folderName, imageCount) {
-        const paths = [];
-        for (let i = 1; i <= imageCount; i++) {
-            paths.push(`${folderName}/${folderName}_${i}.webp`);
-        }
-        return paths;
-    }
-
-    function getAllAssetPaths() {
-        return [
-            ...buildImagePaths('start_male', 13),
-            ...buildImagePaths('start_female', 13),
-            ...buildImagePaths('ending_male_success', 8),
-            ...buildImagePaths('ending_female_success', 8),
-            ...buildImagePaths('ending_male_fail_days', 5),
-            ...buildImagePaths('ending_female_fail_days', 5),
-            ...buildImagePaths('ending_male_fail_boat', 5),
-            ...buildImagePaths('ending_female_fail_boat', 5)
-        ];
-    }
-
-    function updateLoadingProgress(loaded, total) {
-        const percent = total === 0 ? 100 : Math.round((loaded / total) * 100);
-        const text = document.getElementById('loading-text');
-        const fill = document.getElementById('loading-bar-fill');
-        if (text) text.innerText = `${percent}%`;
-        if (fill) fill.style.width = `${percent}%`;
-    }
-
-    function preloadImage(path) {
-        if (preloadedImages.has(path)) return Promise.resolve(preloadedImages.get(path));
-        if (preloadPromises.has(path)) return preloadPromises.get(path);
-
-        const img = new Image();
-        img.decoding = 'async';
-        const promise = new Promise(resolve => {
-            img.onload = () => {
-                preloadedImages.set(path, img);
-                preloadPromises.delete(path);
-                resolve(img);
-            };
-            img.onerror = () => {
-                console.warn('Image preload failed:', path);
-                preloadedImages.set(path, img);
-                preloadPromises.delete(path);
-                resolve(img);
-            };
-        });
-        preloadPromises.set(path, promise);
-        img.src = path;
-        return promise;
-    }
-
-    async function preloadPaths(paths, showOverlay = false) {
-        let loaded = 0;
-        const overlay = document.getElementById('loading-overlay');
-
-        if (showOverlay && overlay) overlay.style.display = 'flex';
-        updateLoadingProgress(0, paths.length);
-
-        await Promise.all(paths.map(async path => {
-            await preloadImage(path);
-            loaded++;
-            updateLoadingProgress(loaded, paths.length);
-        }));
-
-        if (showOverlay && overlay) overlay.style.display = 'none';
-    }
-
-    async function preloadStoryAssets(folderName, imageCount) {
-        if (isPreloading) return;
-        isPreloading = true;
-        await preloadPaths(buildImagePaths(folderName, imageCount), true);
-        isPreloading = false;
-    }
-
-    function preloadGameAssets() {
-        if (assetsReady) return Promise.resolve();
-        if (preloadAllPromise) return preloadAllPromise;
-
-        preloadAllPromise = preloadPaths(getAllAssetPaths(), false).then(() => {
-            assetsReady = true;
-        });
-        return preloadAllPromise;
-    }
-
-    function startBgm() {
-        const bgm = document.getElementById('bgm');
-        if (!bgm) return;
-        bgm.volume = 0.5;
-        bgm.play().catch(e => console.log("背景音樂播放失敗", e));
-    }
-
-    window.addEventListener('load', startBgm);
-    window.addEventListener('pointerdown', startBgm, { once: true });
-    window.addEventListener('keydown', startBgm, { once: true });
-    
-    function playStory(folderName, imageCount, onCompleteCallback) {
-        currentStoryImages = [];
-        currentStoryIndex = 0;
-
-        // 預載入該資料夾內的所有圖片 (假設檔名規則皆為: 資料夾名稱_1.webp)
-        for(let i = 1; i <= imageCount; i++) {
-            let path = `${folderName}/${folderName}_${i}.webp`;
-            let img = preloadedImages.get(path) || new Image();
-            if (!preloadedImages.has(path)) img.src = path;
-            currentStoryImages.push(img);
-        }
-
-        const overlay = document.getElementById('story-overlay');
-        const imgEl = document.getElementById('story-image');
-        const skipBtn = document.getElementById('skip-story-btn'); // 取得跳過按鈕
-        
-        // 顯示第一張圖
-        imgEl.src = currentStoryImages[0].src;
-        overlay.style.display = 'flex';
-
-        // 獨立出一個「結束劇情」的共用函數
-        function finishStory() {
-            overlay.style.display = 'none';
-            overlay.onclick = null; // 清除背景點擊監聽
-            skipBtn.onclick = null; // 清除按鈕點擊監聽
-            if (onCompleteCallback) onCompleteCallback();
-        }
-
-        // 點擊背景換下一張圖
-        overlay.onclick = function() {
-            currentStoryIndex++;
-            if (currentStoryIndex < imageCount) {
-                imgEl.src = currentStoryImages[currentStoryIndex].src;
-            } else {
-                finishStory();
-            }
-        };
-
-        // 點擊「跳過劇情」按鈕
-        skipBtn.onclick = function(event) {
-            event.stopPropagation(); // 阻止點擊事件穿透到背景 (避免觸發換圖)
-            finishStory();
-        };
-    }
-    // --- 👆👆👆 劇情播放系統結束 👆👆👆 ---
-    
-// --- 絕對置中 + 動態等比例縮放技術 ---
+    // --- 絕對置中 + 動態等比例縮放技術 ---
     function resizeGame() {
         const container = document.getElementById('main-container');
         const scaleX = window.innerWidth / 1000;
@@ -579,7 +404,9 @@
     let isPaused = true;
     let timerStarted = false; 
     let isGameOver = false; 
+    
     let selectedGender = ''; 
+    let selectedDifficulty = 'normal'; // 預設難度
     let isMobileMode = false; 
     
     let daysLeft = 90; 
@@ -587,6 +414,12 @@
     let intelCollected = 0;
     let distanceTraveled = 0;
     
+    // 動態難度變數
+    let distInc = 2;               // 推進速度 (影響通關時間)
+    let obsSpeedBase = 2;          // 障礙物基底速度
+    let obsSpawnRate = 0.035;      // 障礙物出現機率
+    let daysIntervalMs = 3000;     // 天數扣減速度 (毫秒)
+
     let eventSpacing = 1200;
     let nextEventDist = eventSpacing;
     let questionIndex = 0; 
@@ -597,7 +430,8 @@
     let obstacles = [];
     let items = [];
     
-    const keys = { w: false, a: false, s: false, d: false, W: false, A: false, S: false, D: false };
+    // 支援方向鍵 (ArrowUp, ArrowDown, ArrowLeft, ArrowRight) 與 WASD
+    const keys = { w: false, a: false, s: false, d: false, W: false, A: false, S: false, D: false, ArrowUp: false, ArrowDown: false, ArrowLeft: false, ArrowRight: false };
     window.addEventListener('keydown', e => { if (keys.hasOwnProperty(e.key)) keys[e.key] = true; });
     window.addEventListener('keyup', e => { if (keys.hasOwnProperty(e.key)) keys[e.key] = false; });
 
@@ -605,13 +439,13 @@
     const charSprite = { name: "石油小精靈", icon: "💧", color: "#00d2d3" };
     const charSystem = { name: "中油航務調度總部", icon: "🏢", color: "#e94560" }; 
 
-    // (為節省版面，題庫陣列維持與先前一致，未更動)
+    // 題庫陣列
     const allQuestionsPool = [
         { q: "台灣目前的能源供應，高度依賴進口。其比例大約是多少？", opts: [{t:"(A) 75%", c:false}, {t:"(B) 85%", c:false}, {t:"(C) 96%", c:true}], hint: "台灣幾乎沒有自產的化石燃料，我們的依賴度接近百分之百。", exp: "正確答案：(C) 96%。\n台灣本土產出的能源極少，高達 96% 以上的能源都需要仰賴進口。" },
         { q: "台灣除了從中東買油，也會從美洲、西非等不同地方進口。這種「分散能源來源」的做法有什麼重要的戰略目的？", opts: [{t:"(A) 為了讓油輪的航線看起來比較多元漂亮", c:false}, {t:"(B) 增加能源供給的韌性，避免單一地區發生戰爭就導致台灣能源中斷", c:true}, {t:"(C) 因為中東地區的石油已經完全被開採光了", c:false}], hint: "「雞蛋不要放在同一個籃子裡」，多幾個來源對國家安全有什麼好處？", exp: "正確答案：(B) 增加能源供給的韌性...。\n分散來源能降低對單一地區的依賴，遇到區域衝突時，我們還有其他地方的能源可以應急。" },
         { q: "液化天然氣（LNG）在運送時，必須維持在攝氏多少度，才能保持液態？", opts: [{t:"(A) -100°C", c:false}, {t:"(B) -162°C", c:true}, {t:"(C) -200°C", c:false}], hint: "天然氣要變成液體需要極度寒冷的環境來將氣體壓縮。", exp: "正確答案：(B) -162°C。\n天然氣需經過極低溫（-162°C）冷卻壓縮成液態，體積會縮小 600 倍以利長途運輸。" },
         { q: "台灣目前運作中的第一座液化天然氣接收站（一接），位於何處？", opts: [{t:"(A) 高雄永安", c:true}, {t:"(B) 台中港", c:false}, {t:"(C) 桃園大林", c:false}], hint: "位於南部，名稱有「永遠平安」吉祥意涵的鄉鎮。", exp: "正確答案：(A) 高雄永安。\n永安接收站是台灣第一座液化天然氣接收站，對於全台供氣至關重要。" },
-        { q: "政府推動「增氣減煤」，除了環保考量，在國家安全戰略上，有何意義？", opts: [{t:"(A) 增加碳排放", c:false}, {t:"(B) 提升發電韌性與能源多元布局", c:true}, {t:"(C) 為了讓煤礦價格下降", c:false}], hint: "「雞蛋不要放在同一個籃子裡」，多一種能源來源對國家有什麼好處？", exp: "正確答案：(B) 提升發電韌性與能源多元布局。\n多元的能源配比能提升國家面對危機的韌性。" },
+        { q: "政府推推動「增氣減煤」，除了環保考量，在國家安全戰略上，有何意義？", opts: [{t:"(A) 增加碳排放", c:false}, {t:"(B) 提升發電韌性與能源多元布局", c:true}, {t:"(C) 為了讓煤礦價格下降", c:false}], hint: "「雞蛋不要放在同一個籃子裡」，多一種能源來源對國家有什麼好處？", exp: "正確答案：(B) 提升發電韌性與能源多元布局。\n多元的能源配比能提升國家面對危機的韌性。" },
         { q: "近期國際情勢緊張，有專家指出若亞洲重要航道受阻，台灣能源供應可能受到影響。上述所指最關鍵的航道是？", opts: [{t:"(A) 直布羅陀海峽", c:false}, {t:"(B) 馬六甲海峽", c:true}, {t:"(C) 英吉利海峽", c:false}], hint: "這個海峽位於馬來半島與蘇門答臘島之間，是連接印度洋與太平洋的捷徑。", exp: "正確答案：(B) 馬六甲海峽。\n它是全球最繁忙的航道之一，也是台灣能源運輸的必經咽喉。" },
         { q: "發生區域衝突、導致主要航道封鎖時，油輪需繞道「龍目海峽」。這會帶來什麼影響？", opts: [{t:"(A) 節省燃料", c:false}, {t:"(B) 縮短航程天數", c:false}, {t:"(C) 增加運送天數，可能影響國內儲備水位", c:true}], hint: "繞道意味著走更遠的路。路程變長了對國內物資會有什麼壓力？", exp: "正確答案：(C) 增加運送天數，可能影響國內儲備水位。\n繞道會消耗更多時間與燃料，並讓國內的能源儲存面臨風險。" },
         { q: "中油的液化天然氣船，主要運送的貨物，是用於下列哪項活動？", opts: [{t:"(A) 提煉汽油給汽車開", c:false}, {t:"(B) 主要用於火力發電，穩定國內供電", c:true}, {t:"(C) 製作塑膠袋的原料", c:false}], hint: "台灣目前的電力有很大一部分來自燃燒氣體發電。", exp: "正確答案：(B) 主要用於火力發電，穩定國內供電。\n台灣進口的天然氣絕大多數用於火力發電廠（如大潭電廠）。" },
@@ -623,24 +457,24 @@
         { q: "為什麼台灣需要興建「三接」（第三座天然氣接收站）？", opts: [{t:"(A) 為了增加原油的儲存空間", c:false}, {t:"(B) 為了分散風險並確保北部供氣穩定", c:true}, {t:"(C) 為了作為海盜的臨時基地", c:false}], hint: "台灣北部是用電大戶，天然氣就近供應有什麼好處？", exp: "正確答案：(B) 為了分散風險並確保北部供氣穩定。\n三接位於桃園，主要供應北部用氣，就近供氣可降低長途管線輸送風險。" },
         { q: "石油小精靈說：「沒有我，你的運動排汗衫就生產不出來。」這代表石油與什麼有關？", opts: [{t:"(A) 石化產鏈與生活用品的轉化", c:true}, {t:"(B) 運動衣的顏色染料", c:false}, {t:"(C) 洗衣服所需的清潔劑", c:false}], hint: "衣服的材質很多是人造化學材料（如聚酯纖維），它的源頭是從哪裡來的？", exp: "正確答案：(A) 石化產鏈與生活用品的轉化。\n原油精煉出的「石油腦」是石化工業的基礎，可製造塑膠、人造纖維（衣服）等。" },
         { q: "若油輪在馬六甲海峽遇到海盜，這反映了能源安全的哪種脆弱性？", opts: [{t:"(A) 氣候脆弱性", c:false}, {t:"(B) 地緣政治與航道安全的風險", c:true}, {t:"(C) 科技研發的落後", c:false}], hint: "海盜是「人」或地區動盪造成的威脅。這屬於哪一種安全風險的範疇？", exp: "正確答案：(B) 地緣政治與航道安全的風險。\n高度依賴特定狹窄航道，一旦發生海盜或政治衝突，就會威脅能源供應。" },
-        { q: "能源生命線的規畫中，台灣主要的 LNG 接收站配置，「不包括」哪一個港口？", opts: [{t:"(A) 高雄永安", c:false}, {t:"(B) 台中", c:false}, {t:"(C) 花蓮", c:true}], hint: "LNG 接收站通常設置在台灣西部海岸，以配合主要的用電核心與西部天然氣管線。", exp: "正確答案：(C) 花蓮。\n目前台灣的接收站主要集中在西部（如永安、台中、觀塘），東部沒有大型 LNG 接收站。" },
+        { q: "能源生命線的規畫中，台灣主要的 LNG 接收站配置，「不包括」哪一個港口？", opts: [{t:"(A) 永安", c:false}, {t:"(B) 台中", c:false}, {t:"(C) 花蓮", c:true}], hint: "LNG 接收站通常設置在台灣西部海岸，以配合主要的用電核心與西部天然氣管線。", exp: "正確答案：(C) 花蓮。\n目前台灣的接收站主要集中在西部（如永安、台中、觀塘），東部沒有大型 LNG 接收站。" },
         { q: "戰時情境中，港口擁塞可能導致進口受阻。此時「港口調度」的能力，有何幫助？", opts: [{t:"(A) 增加油輪數量", c:false}, {t:"(B) 確保救命能源能依優先順序進入正確接收站", c:true}, {t:"(C) 提高原油品質", c:false}], hint: "在緊急情況下，港口容量有限，什麼東西最重要就得優先處理。", exp: "正確答案：(B) 確保救命能源能依優先順序進入正確接收站。\n戰時港口資源有限，精準調度能確保最關鍵的物資能優先卸貨。" },
         { q: "【進口能源依存度】台灣用的能源有將近96%是從國外「坐船」來的，這代表？", opts: [{t:"(A) 台灣自產能源多", c:false}, {t:"(B) 我們高度依賴大船，船進不來電與油就會不夠", c:true}, {t:"(C) 船是來旅遊的", c:false}], hint: "如果我們用的東西幾乎都是別人送來的，當送貨員不來的時候我們會發生什麼事呢？", exp: "正確答案：(B) 我們高度依賴大船，船進不來電與油就會不夠。\n台灣有極高的能源依賴度，必須靠海運來維持民生與經濟的正常運作。" },
         { q: "【石化產業與生活】哪一個是石油腦變出來的「生活魔法」，讓我們運動時穿得很舒服？", opts: [{t:"(A) 木頭桌子", c:false}, {t:"(B) 石油原料做成的「機能排汗衫」", c:true}, {t:"(C) 石頭藝術品", c:false}], hint: "想想看，哪一個選項是我們穿在身上，而且跟「人造化學材料」有關的物品？", exp: "正確答案：(B) 石油原料做成的「機能排汗衫」。\n石油腦是石化工業的基礎原料，可以製作成塑膠、人造纖維等。" },
         { q: "【法定儲備天數】規定中油要準備好「90天能源安全儲備量」。這就像是：", opts: [{t:"(A) 在家裡存好緊急避難包的乾糧", c:true}, {t:"(B) 把石油倒進海裡存", c:false}, {t:"(C) 為了讓油桶漂亮", c:false}], hint: "「儲備」就是在危險或困難發生前，先把重要、救命的東西存起來備用。", exp: "正確答案：(A) 在家裡存好緊急避難包的乾糧。\n法定儲備量就像是國家的緊急避難包，確保在突發狀況下，台灣還能維持一段時間的正常運作。" },
         { q: "【未來能源】下列哪一組是中油讓我們未來可以多利用的「乾淨能源超能力」？", opts: [{t:"(A) 燃煤發電", c:false}, {t:"(B) 氫能與地熱（利用乾淨氣體與地熱）", c:true}, {t:"(C) 燒森林裡的樹", c:false}], hint: "乾淨的能源不會製造很多黑煙或破壞大自然，要尋找來自地下或不會排碳的氣體。", exp: "正確答案：(B) 氫能與地熱（利用乾淨氣體與地熱）。\n中油正積極轉型，發展地熱、氫能等綠色能源，作為未來達成淨零排放的關鍵。" },
-        { q: "【液化天然氣接收站】蓋好「接收站」這座專用停車場，最重要的目的是什麼？", opts: [{t:"(A) 增加儲存空間，確保發電燃料不斷", c:true}, {t:"(B) 蓋彩虹橋", c:false}, {t:"(C) 讓船停得整齊", c:false}], hint: "天然氣送來之後需要有足夠又安全的地方來「卸貨」跟「存放」，這樣發電廠每天才有氣可以用。", exp: "正確答案：(A) 增加儲存空間，確保發電燃料不斷。\n天然氣接收站是儲存天然氣與穩定供應給發電廠的重要基礎設施。" },
+        { q: "【天然氣接收站】蓋好「接收站」這座專用停車場，最重要的目的是什麼？", opts: [{t:"(A) 增加儲存空間，確保發電燃料不斷", c:true}, {t:"(B) 蓋彩虹橋", c:false}, {t:"(C) 讓船停得整齊", c:false}], hint: "天然氣送來之後需要有足夠又安全的地方來「卸貨」跟「存放」，這樣發電廠每天才有氣可以用。", exp: "正確答案：(A) 增加儲存空間，確保發電燃料不斷。\n天然氣接收站是儲存天然氣與穩定供應給發電廠的重要基礎設施。" },
         { q: "在「2026年美伊衝突」導致能源可能短缺的情況下，身為民眾最適合的行動是？", opts: [{t:"(A) 不關心能源議題", c:false}, {t:"(B) 增加能源使用", c:false}, {t:"(C) 節約能源並支持替代能源", c:true}], hint: "遇到危機時，我們應該要盡量省下物資，並且找尋其他的代替方法。", exp: "正確答案：(C) 節約能源並支持替代能源。\n面對能源短缺，每個人都可以從節能做起，並支持本土替代能源發展。" },
         { q: "在「2026年美伊衝突」中，因為荷姆茲海峽可能被封鎖，下列何者最可能發生？", opts: [{t:"(A) 石油變得更便宜", c:false}, {t:"(B) 全球油價上升", c:true}, {t:"(C) 能源供應更加穩定", c:false}], hint: "當重要的東西運不出來時，它的價格會怎麼變化？", exp: "正確答案：(B) 全球油價上升。\n荷姆茲海峽是全球最重要的石油出口通道，一旦封鎖，石油供應大減，必然導致油價飆升。" },
         { q: "如果 2026 年能源短缺，為了節約資源，下列哪一個做法是「錯誤」的？", opts: [{t:"(A) 浪費電力，冷氣開整天", c:true}, {t:"(B) 減少使用冷氣", c:false}, {t:"(C) 自備環保餐具", c:false}], hint: "題目要選的是「不應該做」的行為喔！什麼行為會把珍貴的能源消耗光？", exp: "正確答案：(A) 浪費電力，冷氣開整天。\n面對能源短缺危機，我們應該盡可能節能減碳。冷氣是耗電量大的設備，開整天會嚴重浪費國家珍貴的發電資源。" }
     ];
 
     function selectDevice(deviceType) {
-        startBgm();
         const mobileControls = document.getElementById('mobile-controls');
         if (deviceType === 'desktop') {
             isMobileMode = false;
-            document.getElementById('ctrl-desc').innerHTML = "🎮 操作方式：請使用鍵盤的 <span style='color:#f9ca24; font-weight:bold;'>W、A、S、D</span> 控制船隻移動";
+            // 提示文案新增支援方向鍵說明
+            document.getElementById('ctrl-desc').innerHTML = "🎮 操作方式：請使用鍵盤的 <span style='color:#f9ca24; font-weight:bold;'>W、A、S、D</span> 或 <span style='color:#f9ca24; font-weight:bold;'>方向鍵 (上下左右)</span> 控制船隻移動";
         } else {
             isMobileMode = true;
             let deviceName = deviceType === 'tablet' ? '平板' : '手機';
@@ -651,7 +485,7 @@
                 mobileControls.style.bottom = '25px';
                 mobileControls.style.right = '25px';
             } else if (deviceType === 'mobile') {
-                mobileControls.style.bottom = '8px';  // 大幅下移，貼近螢幕下邊緣
+                mobileControls.style.bottom = '8px';  
                 mobileControls.style.right = '8px';
             }
 
@@ -669,6 +503,19 @@
         openFullscreen();
     }
 
+    function selectDifficulty(diff) {
+        selectedDifficulty = diff;
+        document.querySelectorAll('.difficulty-btn').forEach(btn => btn.classList.remove('selected'));
+        document.getElementById('diff-' + diff).classList.add('selected');
+    }
+
+    function selectGender(g) {
+        selectedGender = g;
+        document.getElementById('gender-M').classList.remove('selected');
+        document.getElementById('gender-F').classList.remove('selected');
+        document.getElementById('gender-' + g).classList.add('selected');
+    }
+
     function bindDpad(btnId, keyChar) {
         const btn = document.getElementById(btnId);
         const press = (e) => { e.preventDefault(); keys[keyChar] = true; btn.classList.add('active'); };
@@ -684,13 +531,6 @@
     bindDpad('btn-down', 's');
     bindDpad('btn-left', 'a');
     bindDpad('btn-right', 'd');
-
-    function selectGender(g) {
-        selectedGender = g;
-        document.getElementById('gender-M').classList.remove('selected');
-        document.getElementById('gender-F').classList.remove('selected');
-        document.getElementById('gender-' + g).classList.add('selected');
-    }
 
     function updateDashboard() {
         daysLeftEl.innerText = Math.max(0, daysLeft);
@@ -742,30 +582,25 @@
             const btn = document.createElement('button');
             btn.className = opt.isIntel ? 'dialog-btn intel-btn' : 'dialog-btn';
             
-            // 判斷按鈕文字，如果是已解鎖狀態 (cost 為 0) 就顯示不同文字
             if (opt.isIntel && opt.cost === 0 && opt.keepDialogOpen) {
                 btn.innerHTML = "✅ 再次查看提示 (已解鎖)";
             } else {
                 btn.innerHTML = opt.text;
             }
             
-            // 判斷條件：如果情報不足，設定 disabled
             if (opt.disabledCondition && opt.disabledCondition(opt)) {
                 btn.disabled = true;
                 if(opt.isIntel) btn.innerHTML = `🔒 ${opt.text} (情報不足)`;
             } else {
                 btn.onclick = () => {
-                    // 【情報扣除與解鎖機制】
                     if(opt.isIntel && opt.cost > 0) {
-                        if (intelCollected < opt.cost) return; // 阻擋異常連點
+                        if (intelCollected < opt.cost) return; 
                         intelCollected -= opt.cost;
-                        opt.cost = 0; // 關鍵：將 cost 歸零，標記此對話選項已「買斷/解鎖」
+                        opt.cost = 0; 
                         updateDashboard(); 
                     }
                     
-                    // 如果這個按鈕點擊後不會關閉視窗 (如獲取提示)
                     if (opt.keepDialogOpen) {
-                        // 不再鎖死按鈕，而是更改文字讓玩家知道已解鎖可重複看
                         btn.innerHTML = "✅ 再次查看提示 (已解鎖)";
                     } else {
                         document.getElementById('dialog-overlay').style.display = 'none';
@@ -789,45 +624,49 @@
                 updateDashboard();
                 if(daysLeft <= 0) gameOver(false, "能源儲備耗盡！國家陷入癱瘓。");
             }
-        }, 3000); 
+        }, daysIntervalMs); 
     }
 
-    async function startGame() {
+    function startGame() {
         if (!selectedGender) {
             showCustomAlert("提示", "請先選擇船長性別喔！");
             return;
         }
-        if (isPreloading) return;
 
-        // 隱藏開始畫面
+        // 依據難度大幅拉開遊戲速度差距
+        if (selectedDifficulty === 'easy') {
+            distInc = 1.0;             // 推進極慢，非常休閒
+            obsSpeedBase = 1.0;        // 障礙物掉落極慢
+            obsSpawnRate = 0.015;      // 障礙物極少
+            daysIntervalMs = 4500;     // 天數扣除極慢 (4.5秒扣1天)
+        } else if (selectedDifficulty === 'hard') {
+            distInc = 3.5;             // 推進極快，挑戰極限
+            obsSpeedBase = 4.5;        // 障礙物掉落極快
+            obsSpawnRate = 0.065;      // 障礙物密集
+            daysIntervalMs = 1500;     // 天數扣除極快 (1.5秒扣1天，強迫快節奏)
+        } else {
+            distInc = 2.0;             // 中等(預設)
+            obsSpeedBase = 2.5;        // 稍微調快一點拉開與簡單的差距
+            obsSpawnRate = 0.035;
+            daysIntervalMs = 3000;     // (3秒扣1天)
+        }
+
+        charCaptain.icon = selectedGender === 'M' ? '👨‍✈️' : '👩‍✈️';
+        selectedQuestions = allQuestionsPool.sort(() => 0.5 - Math.random()).slice(0, 8);
         document.getElementById('start-screen').style.display = 'none';
-        await preloadStoryAssets((selectedGender === 'M' ? 'start_male' : 'start_female'), 13);
-        preloadGameAssets();
+        document.getElementById('dashboard').style.display = 'flex'; 
         
-        // 先播放背景音樂，讓看劇情時就有音樂沉浸感
+        if (isMobileMode) document.getElementById('mobile-controls').style.display = 'grid';
+        
         let bgm = document.getElementById('bgm');
         if (bgm) { bgm.volume = 0.5; bgm.play().catch(e => console.log("背景音樂播放失敗", e)); }
-
-        // 判斷要播哪個資料夾的開場劇情
-        let folderName = selectedGender === 'M' ? 'start_male' : 'start_female';
-        
-        // 呼叫劇情系統，播完 13 張圖後才執行原有的開始遊戲邏輯
-        playStory(folderName, 13, () => {
-            // 以下為原本 startGame 的初始化邏輯
-            charCaptain.icon = selectedGender === 'M' ? '👨‍✈️' : '👩‍✈️';
-            selectedQuestions = allQuestionsPool.sort(() => 0.5 - Math.random()).slice(0, 8);
-            document.getElementById('dashboard').style.display = 'flex'; 
-            
-            if (isMobileMode) document.getElementById('mobile-controls').style.display = 'grid';
-            
-            showDialog(charCaptain, "任務開始！閃避障礙並收集稀有的情報📄，它們是逆轉戰局的關鍵。<br>沿途中你將面臨 8 項隨機的能源知識挑戰，做好準備！", [
-                { text: "全速前進！", action: () => { startTimer(); requestAnimationFrame(update); } }
-            ]);
-        });
+        showDialog(charCaptain, "任務開始！閃避障礙並收集稀有的情報📄，它們是逆轉戰局的關鍵。<br>沿途中你將面臨 8 項隨機的能源知識挑戰，做好準備！", [
+            { text: "全速前進！", action: () => { startTimer(); requestAnimationFrame(update); } }
+        ]);
     }
 
     function spawnEntities() {
-        if (Math.random() < 0.035) obstacles.push({ x: Math.random() * (canvas.width - 40), y: -50, width: 40, height: 40, speed: Math.random() * 2 + 2, icon: '⛴️' });
+        if (Math.random() < obsSpawnRate) obstacles.push({ x: Math.random() * (canvas.width - 40), y: -50, width: 40, height: 40, speed: Math.random() * 2 + obsSpeedBase, icon: '⛴️' });
         if (Math.random() < 0.008) items.push({ x: Math.random() * (canvas.width - 30), y: -30, width: 30, height: 30, speed: 2.5, icon: '📄' });
     }
 
@@ -837,16 +676,17 @@
     }
 
     function checkEvents() {
-        if (distanceTraveled === 1200) stageInfoEl.innerText = "📍 阿拉伯海";
-        if (distanceTraveled === 3600) stageInfoEl.innerText = "📍 印度洋航線";
-        if (distanceTraveled === 6000) stageInfoEl.innerText = "📍 馬六甲海峽";
-        if (distanceTraveled === 8400) stageInfoEl.innerText = "📍 南中國海";
-        if (distanceTraveled === 12000) stageInfoEl.innerText = "📍 臺灣海峽";
+        // 使用區間判斷取代絕對等於，防止不同速度推進導致錯過事件
+        if (distanceTraveled >= 1200 && distanceTraveled - distInc < 1200) stageInfoEl.innerText = "📍 阿拉伯海";
+        if (distanceTraveled >= 3600 && distanceTraveled - distInc < 3600) stageInfoEl.innerText = "📍 印度洋航線";
+        if (distanceTraveled >= 6000 && distanceTraveled - distInc < 6000) stageInfoEl.innerText = "📍 馬六甲海峽";
+        if (distanceTraveled >= 8400 && distanceTraveled - distInc < 8400) stageInfoEl.innerText = "📍 南中國海";
+        if (distanceTraveled >= 12000 && distanceTraveled - distInc < 12000) stageInfoEl.innerText = "📍 臺灣海峽";
 
-        if (distanceTraveled === nextEventDist) {
+        if (distanceTraveled >= nextEventDist) {
             if (questionIndex === 3 && gameStage === 0) { triggerPirateEvent(); gameStage = 1; nextEventDist += eventSpacing; return; }
             else if (questionIndex === 8 && gameStage === 1) { triggerRepairEvent(); gameStage = 2; nextEventDist += eventSpacing; return; }
-            else if (questionIndex === 8 && gameStage === 2) { triggerFinalEvent(); return; }
+            else if (questionIndex === 8 && gameStage === 2) { triggerFinalEvent(); nextEventDist += 999999; return; }
             if (questionIndex < 8) { triggerQuestionEvent(selectedQuestions[questionIndex]); questionIndex++; nextEventDist += eventSpacing; }
         }
     }
@@ -870,7 +710,6 @@
             }
         }));
         
-        // 傳遞 opt 參數進去以支援動態 cost 判定
         options.push({ text: "🔍 消耗 1 份情報獲取判斷提示", isIntel: true, cost: 1, keepDialogOpen: true, keepPaused: true, disabledCondition: (opt) => intelCollected < opt.cost, action: (resume) => { showCustomAlert("✨ 總部戰略提示", qObj.hint, resume); } });
         showDialog(charSprite, `【知識大挑戰】 (進度：${questionIndex + 1}/8)<br><br>${qObj.q}`, options);
     }
@@ -893,9 +732,9 @@
     function triggerFinalEvent() {
         let qObj = {
             q: "看到臺灣了！我們載運的發電用 LNG（液化天然氣）必須維持在 -162°C，請問應該駛入哪個接收站才能順利卸貨？",
-            opts: [{ t: "(A) 基隆港 (一般商港)", c: false }, { t: "(B) 高雄永安或臺中液化天然氣接收站", c: true }],
+            opts: [{ t: "(A) 基隆港 (一般商港)", c: false }, { t: "(B) 永安或臺中液化天然氣接收站", c: true }],
             hint: "天然氣需要專門的低溫儲備槽與氣化設備哦！",
-            exp: "天然氣接收站（如高雄永安、臺中）具備專業的極低溫設備，才能安全卸貨維護電力。"
+            exp: "天然氣接收站（如永安、臺中）具備專業的極低溫設備，才能安全卸貨維護電力。"
         };
         let options = qObj.opts.map(opt => ({
             text: opt.t,
@@ -920,12 +759,15 @@
             for(let i=0; i<10; i++) { ctx.moveTo(0, (distanceTraveled % 60) + i*60); ctx.lineTo(800, (distanceTraveled % 60) + i*60); }
             ctx.stroke();
 
-            if ((keys.w || keys.W) && player.y > 0) player.y -= player.speed;
-            if ((keys.s || keys.S) && player.y < canvas.height - player.height) player.y += player.speed;
-            if ((keys.a || keys.A) && player.x > 0) player.x -= player.speed;
-            if ((keys.d || keys.D) && player.x < canvas.width - player.width) player.x += player.speed;
+            // 支援 WASD 與 方向鍵 操控
+            if ((keys.w || keys.W || keys.ArrowUp) && player.y > 0) player.y -= player.speed;
+            if ((keys.s || keys.S || keys.ArrowDown) && player.y < canvas.height - player.height) player.y += player.speed;
+            if ((keys.a || keys.A || keys.ArrowLeft) && player.x > 0) player.x -= player.speed;
+            if ((keys.d || keys.D || keys.ArrowRight) && player.x < canvas.width - player.width) player.x += player.speed;
 
-            distanceTraveled += 2; spawnEntities();
+            // 套用難度對應的推進速度
+            distanceTraveled += distInc; 
+            spawnEntities();
 
             for (let i = obstacles.length - 1; i >= 0; i--) {
                 let obs = obstacles[i]; obs.y += obs.speed;
@@ -953,34 +795,12 @@
 
     function gameOver(isWin, customMsg = "") {
         isGameOver = true; clearInterval(daysInterval); isPaused = true;
-        
-        // 判斷結局劇情的資料夾與圖片數量
-        let folderName = "";
-        let imgCount = 0;
-        let genderStr = selectedGender === 'M' ? 'male' : 'female';
-
-        if (isWin) {
-            folderName = `ending_${genderStr}_success`;
-            imgCount = 8;
-        } else if (daysLeft <= 0) {
-            folderName = `ending_${genderStr}_fail_days`;
-            imgCount = 5;
-        } else { // hullIntegrity <= 0
-            folderName = `ending_${genderStr}_fail_boat`;
-            imgCount = 5;
-        }
-
-        // 先呼叫劇情系統，播完後才彈出原本的結算視窗
-        playStory(folderName, imgCount, () => {
-            // 以下為原本 gameOver 的結算視窗邏輯
-            let displayDays = Math.max(0, daysLeft);
-            let msg = isWin 
-                ? `【任務成功！】<br><br>你成功保住了能源，化解危機！<br>剩餘能源：<span style="color:#00d2d3">${displayDays}</span> 天<br>最終船體：<span style="color:#00d2d3">${hullIntegrity}%</span>` 
-                : `【任務失敗】<br><br><span style="color:#e94560">${customMsg}</span><br>物資短缺，臺灣面臨能源危機。`;
-            msg += `<br><br><span style="color: #00ffff; font-size: 16px;">💡 提示：可以按鍵盤「F11」退出全螢幕。</span>`;
-            
-            showDialog(charSystem, msg, [{ text: "重新進行挑戰", action: () => location.reload() }]);
-        });
+        let displayDays = Math.max(0, daysLeft);
+        let msg = isWin 
+            ? `【任務成功！】<br><br>你成功保住了能源，化解危機！<br>剩餘能源：<span style="color:#00d2d3">${displayDays}</span> 天<br>最終船體：<span style="color:#00d2d3">${hullIntegrity}%</span>` 
+            : `【任務失敗】<br><br><span style="color:#e94560">${customMsg}</span><br>物資短缺，臺灣面臨能源危機。`;
+        msg += `<br><br><span style="color: #00ffff; font-size: 16px;">💡 提示：可以按鍵盤「F11」退出全螢幕。</span>`;
+        showDialog(charSystem, msg, [{ text: "重新進行挑戰", action: () => location.reload() }]);
     }
 </script>
 </body>
