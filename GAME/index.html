@@ -341,6 +341,12 @@
     </div>
 </div>
 
+<div id="story-overlay" style="display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 9999; cursor: pointer; flex-direction: column; justify-content: center; align-items: center;">
+    <img id="story-image" src="" style="max-width: 100%; max-height: 100%; object-fit: contain; pointer-events: none;">
+    <div style="position: absolute; bottom: 20px; right: 20px; color: #fff; font-size: 20px; font-weight: bold; animation: blink 1s infinite; background: rgba(0,0,0,0.5); padding: 5px 15px; border-radius: 10px;">點擊畫面繼續 ▼</div>
+    <button id="skip-story-btn" onmouseover="this.style.background='rgba(233, 69, 96, 0.8)'" onmouseout="this.style.background='rgba(0,0,0,0.7)'" style="position: absolute; top: 20px; right: 20px; padding: 10px 20px; font-size: 18px; font-weight: bold; background: rgba(0,0,0,0.7); color: #fff; border: 2px solid #fff; border-radius: 8px; cursor: pointer; z-index: 10000; transition: background 0.3s;">⏭️ 跳過劇情</button>
+</div>
+
 <div id="mobile-controls">
     <div class="d-btn" id="btn-up">⬆️</div>
     <div class="d-btn" id="btn-left">⬅️</div>
@@ -349,6 +355,51 @@
 </div>
 
 <script>
+
+    // --- 👇👇👇 劇情播放系統 👇👇👇 ---
+    let currentStoryImages = [];
+    let currentStoryIndex = 0;
+    
+    function playStory(folderName, imageCount, onCompleteCallback) {
+        currentStoryImages = [];
+        currentStoryIndex = 0;
+
+        for (let i = 1; i <= imageCount; i++) {
+            let img = new Image();
+            img.src = `${folderName}/${folderName}_${i}.webp`;
+            currentStoryImages.push(img);
+        }
+
+        const overlay = document.getElementById('story-overlay');
+        const imgEl = document.getElementById('story-image');
+        const skipBtn = document.getElementById('skip-story-btn');
+
+        imgEl.src = currentStoryImages[0].src;
+        overlay.style.display = 'flex';
+
+        function finishStory() {
+            overlay.style.display = 'none';
+            overlay.onclick = null;
+            skipBtn.onclick = null;
+            if (onCompleteCallback) onCompleteCallback();
+        }
+
+        overlay.onclick = function() {
+            currentStoryIndex++;
+            if (currentStoryIndex < imageCount) {
+                imgEl.src = currentStoryImages[currentStoryIndex].src;
+            } else {
+                finishStory();
+            }
+        };
+
+        skipBtn.onclick = function(event) {
+            event.stopPropagation();
+            finishStory();
+        };
+    }
+    // --- 👆👆👆 劇情播放系統結束 👆👆👆 ---
+
     // --- 絕對置中 + 動態等比例縮放技術 ---
     function resizeGame() {
         const container = document.getElementById('main-container');
@@ -654,15 +705,18 @@
         charCaptain.icon = selectedGender === 'M' ? '👨‍✈️' : '👩‍✈️';
         selectedQuestions = allQuestionsPool.sort(() => 0.5 - Math.random()).slice(0, 8);
         document.getElementById('start-screen').style.display = 'none';
-        document.getElementById('dashboard').style.display = 'flex'; 
-        
-        if (isMobileMode) document.getElementById('mobile-controls').style.display = 'grid';
-        
+
         let bgm = document.getElementById('bgm');
         if (bgm) { bgm.volume = 0.5; bgm.play().catch(e => console.log("背景音樂播放失敗", e)); }
-        showDialog(charCaptain, "任務開始！閃避障礙並收集稀有的情報📄，它們是逆轉戰局的關鍵。<br>沿途中你將面臨 8 項隨機的能源知識挑戰，做好準備！", [
-            { text: "全速前進！", action: () => { startTimer(); requestAnimationFrame(update); } }
-        ]);
+
+        let folderName = selectedGender === 'M' ? 'start_male' : 'start_female';
+        playStory(folderName, 13, () => {
+            document.getElementById('dashboard').style.display = 'flex'; 
+            if (isMobileMode) document.getElementById('mobile-controls').style.display = 'grid';
+            showDialog(charCaptain, "任務開始！閃避障礙並收集稀有的情報📄，它們是逆轉戰局的關鍵。<br>沿途中你將面臨 8 項隨機的能源知識挑戰，做好準備！", [
+                { text: "全速前進！", action: () => { startTimer(); requestAnimationFrame(update); } }
+            ]);
+        });
     }
 
     function spawnEntities() {
@@ -795,12 +849,29 @@
 
     function gameOver(isWin, customMsg = "") {
         isGameOver = true; clearInterval(daysInterval); isPaused = true;
-        let displayDays = Math.max(0, daysLeft);
-        let msg = isWin 
-            ? `【任務成功！】<br><br>你成功保住了能源，化解危機！<br>剩餘能源：<span style="color:#00d2d3">${displayDays}</span> 天<br>最終船體：<span style="color:#00d2d3">${hullIntegrity}%</span>` 
-            : `【任務失敗】<br><br><span style="color:#e94560">${customMsg}</span><br>物資短缺，臺灣面臨能源危機。`;
-        msg += `<br><br><span style="color: #00ffff; font-size: 16px;">💡 提示：可以按鍵盤「F11」退出全螢幕。</span>`;
-        showDialog(charSystem, msg, [{ text: "重新進行挑戰", action: () => location.reload() }]);
+        let folderName = "";
+        let imgCount = 0;
+        let genderStr = selectedGender === 'M' ? 'male' : 'female';
+
+        if (isWin) {
+            folderName = `ending_${genderStr}_success`;
+            imgCount = 8;
+        } else if (daysLeft <= 0) {
+            folderName = `ending_${genderStr}_fail_days`;
+            imgCount = 5;
+        } else {
+            folderName = `ending_${genderStr}_fail_boat`;
+            imgCount = 5;
+        }
+
+        playStory(folderName, imgCount, () => {
+            let displayDays = Math.max(0, daysLeft);
+            let msg = isWin 
+                ? `【任務成功！】<br><br>你成功保住了能源，化解危機！<br>剩餘能源：<span style="color:#00d2d3">${displayDays}</span> 天<br>最終船體：<span style="color:#00d2d3">${hullIntegrity}%</span>` 
+                : `【任務失敗】<br><br><span style="color:#e94560">${customMsg}</span><br>物資短缺，臺灣面臨能源危機。`;
+            msg += `<br><br><span style="color: #00ffff; font-size: 16px;">💡 提示：可以按鍵盤「F11」退出全螢幕。</span>`;
+            showDialog(charSystem, msg, [{ text: "重新進行挑戰", action: () => location.reload() }]);
+        });
     }
 </script>
 </body>
